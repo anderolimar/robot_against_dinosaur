@@ -1,0 +1,28 @@
+{
+  "name": "robot_against_dinosaur",
+  "version": "1.0.0",
+  "description": "Robots againts dinosaurs simulator",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha test/**/*-test.js",
+    "start": "node main.js",
+    "start-local": "nodemon node main.js"
+  },
+  "keywords": [
+    "Robots",
+    "Dinosaurs",
+    "Simulator"
+  ],
+  "devDependencies": {
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "eslintConfig": {
+    "globals": {
+      "__require": true
+    }
+  }
+}
