@@ -6,8 +6,6 @@ class InMemoryDB {
 		this.data = {};
 	}
 	
-    static instance = new InMemoryDB();	
-	
 	createCollection(collectionName){
 		if (!this.hasCollection(collectionName)) {
 			this.data[collectionName] = [];
@@ -74,6 +72,8 @@ class InMemoryDB {
 		return true;
 	}	
 }
+
+InMemoryDB.instance = new InMemoryDB();
 
 module.exports = InMemoryDB;
 

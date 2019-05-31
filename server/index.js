@@ -4,10 +4,15 @@ var router = express.Router();
 var port = parseInt(process.env.APP_PORT || '3000');
 
 class Server {
-    start(app){
+    init(app){
         app.start(router); 
-        
         handler.use(router);
+    }
+    
+    start(){
+        process.on('uncaughtException', (err) => {
+          console.log(`Caught exception: ${err}\n`);
+        });
 
         handler.listen(port, function () {
           console.log(`Listening on port ${port}!`);

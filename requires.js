@@ -15,6 +15,10 @@ var paths = {
     "routes"                : "app/routes",
     //controllers
     "controllers"           : "app/controllers", 
+    //data
+    "data"                  : "app/data",
+    //models
+    "models"                : "app/models",    
     //libs
     "in-memory-db"          : "libs/in-memory-db" 
 }
