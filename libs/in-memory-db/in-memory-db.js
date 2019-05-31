@@ -38,8 +38,10 @@ class InMemoryDB {
 	    let result = [];
 	    for(let data of this.data[collectionName]){
 	        let positive = new WhereCompare(data, whereClause).compare();
-	        if(positive) result.push(data);
-	        if(firstRes) return result; 
+	        if(positive) { 
+				result.push(data);
+				if(firstRes) return result; 
+			}
 		}
 		return result;
 	}
