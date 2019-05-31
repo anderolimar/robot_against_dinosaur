@@ -24,7 +24,7 @@ class InMemoryDB {
 			let id = (this.data[collectionName].length + 1)
 			let reg = Object.assign(data, { _id: id });
 			this.data[collectionName].push(reg);
-    		return reg
+    			return reg
 		} else {
 			throw `Invalid collection ${collectionName}`;
 		}
@@ -35,10 +35,11 @@ class InMemoryDB {
 	    let firstRes = first || Object.keys(whereClause).includes("_id");
 	    let result = [];
 	    for(let data of this.data[collectionName]){
-			console.dir(data)
 	        let positive = new WhereCompare(data, whereClause).compare();
-	        if(positive) result.push(data);
-	        if(firstRes) return result; 
+	        if(positive) { 
+				result.push(data);
+				if(firstRes) return result; 
+			}
 		}
 		return result;
 	}

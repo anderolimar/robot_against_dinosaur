@@ -12,7 +12,7 @@ class WhereCompare {
             let refValue = this.ref[key];
             let positive = false;
             for(let k of Object.keys(whereProp)){
-                positive = Operators[k](whereProp[k], refValue);
+                positive = Operators[k](refValue, whereProp[k]);
                 if(positive) break;
             }
             if(!positive) return false;
