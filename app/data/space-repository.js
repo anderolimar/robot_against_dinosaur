@@ -2,13 +2,14 @@ const db = require("../../libs/in-memory-db").db;
 const models = require("../models");
 const Space = models.data.space;
 const DatabaseError = models.errors.database.DatabaseError;
-const collectionName = "spaces";
+const spacesCollectionName = "spaces";
+const elementsCollectionName = "elements";
 
 class SpaceRepository {
     static createNewSpace(newSpace){
       return new Promise((resolve, reject) => {
         try {  
-          let resultSpace = db.insert(collectionName, newSpace.toObject());
+          let resultSpace = db.insert(spacesCollectionName, newSpace.toObject());
           let fromObjSpace = Space.fromObject(resultSpace) 
           resolve(fromObjSpace);
         }
@@ -21,10 +22,13 @@ class SpaceRepository {
     static getSpace(spaceId){
       return new Promise((resolve, reject) => {
         try {
-          let query = { _id: { $eq: spaceId } };
-          let resultSpace = db.first(collectionName, query);
+          let querySpace = { _id: { $eq: spaceId } };
+          let queryElements = { spaceId: { $eq: spaceId } };
+          let resultSpace = db.first(spacesCollectionName, querySpace);
+          let elements = db.select(elementsCollectionName, queryElements);
           if(!resultSpace) resolve(null);
-          let fromObjSpace = Space.fromObject(resultSpace) 
+          let fromObjSpace = Space.fromObject(resultSpace); 
+          fromObjSpace.filled = elements;
           resolve(fromObjSpace);
         }
         catch(err){

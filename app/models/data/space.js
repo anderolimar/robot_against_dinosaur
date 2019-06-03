@@ -15,7 +15,7 @@ class Space {
   }
   
   static fromObject(obj){
-      let space = new Space({});
+      let space = new Space();
       space._id = obj._id;
       space.lines = new Range(obj.lines);
       space.columns = new Range(obj.columns);
