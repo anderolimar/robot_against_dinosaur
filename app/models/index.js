@@ -1,5 +1,18 @@
-var Space = require("./space");
+var Space = require("./data/space");
+const SpaceResponses = require("./responses/space-responses");
+const CommonsResponse = require("./responses/commons-response");
+const DatabaseErrors = require("./errors/database-errors");
+
 
 module.exports = {
-    space: Space
+  data: { 
+    space:  Space 
+  },
+  responses: {
+    commons: CommonsResponse,
+    space: SpaceResponses
+  },
+  errors: {
+    database: DatabaseErrors
+  }
 }

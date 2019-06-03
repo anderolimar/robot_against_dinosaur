@@ -1,5 +1,5 @@
-var SpacesRepository = require("./spaces-repository");
+var SpaceRepository = require("./space-repository");
 
 module.exports = {
-    spaces: SpacesRepository
+    space: SpaceRepository
 }

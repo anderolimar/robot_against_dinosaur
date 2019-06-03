@@ -1,15 +1,11 @@
-/*global __require*/
-
-var express = require('express');
-var handler = express();
-var router = express.Router();
-var port = parseInt(process.env.APP_PORT || '3000');
-var Routes = __require("routes");
+const Setup = require('./setup');
+const Routes = require('./routes');
 
 class App {
-    start(router){
-        Routes.loadRoutes(router);
-    }
+  start(router){
+    Setup.start();
+    Routes.loadRoutes(router);
+  }
 }
 
 module.exports = new App();
