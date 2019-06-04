@@ -35,6 +35,17 @@ class SpaceBusiness {
       }
       throw err;
     }
+  }
+  
+  static validateSpaceId(spaceId){
+    let errors = [];
+    
+    if(!spaceId || !isNaN(spaceId) || !Number.isInteger(Number(spaceId))){
+      errors.push({ 
+        code: "INVALID_SPACE_ID_VALUE", 
+        message: "Invalid spaceId value. Value must be a Integer" 
+      })    
+    }
   }  
 }
 

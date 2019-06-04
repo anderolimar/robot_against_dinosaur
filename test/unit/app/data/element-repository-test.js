@@ -1,7 +1,7 @@
-const proxyquire = require("proxyquire");
 const testHelper = require("../../../test-helper");
 const Element = require("../../../../app/models").data.element;
 const should = testHelper.should();
+const proxyquire = require("proxyquire");
 
 describe("ElementRepository", function()
 {
@@ -59,7 +59,6 @@ describe("ElementRepository", function()
         "../../libs/in-memory-db": {
           db: {
             first: ()  => {  
-              
               expectedElement._id = 123;
               return expectedElement.toObject();
             }
@@ -67,21 +66,21 @@ describe("ElementRepository", function()
         }
       });
       
-      let newElement = await ElementRepository.createNewElement(expectedElement);
+      let element = await ElementRepository.getElement(expectedElement);
       
-      should(newElement).have.property('_id');
-      should(newElement).have.property('line');
-      should(newElement).have.property('column');
-      should(newElement).have.property('face');
-      should(newElement).have.property('type');
-      should(newElement).have.property('spaceId');
+      should(element).have.property('_id');
+      should(element).have.property('line');
+      should(element).have.property('column');
+      should(element).have.property('face');
+      should(element).have.property('type');
+      should(element).have.property('spaceId');
       
-      should(newElement._id).be.equal(expectedElement._id);
+      should(element._id).be.equal(expectedElement._id);
 
-      should(newElement.line).be.equal(expectedElement.line);
-      should(newElement.column).be.equal(expectedElement.column);
-      should(newElement.face).be.equal(expectedElement.face);
-      should(newElement.type).be.equal(expectedElement.type);
+      should(element.line).be.equal(expectedElement.line);
+      should(element.column).be.equal(expectedElement.column);
+      should(element.face).be.equal(expectedElement.face);
+      should(element.type).be.equal(expectedElement.type);
     });
 
   });

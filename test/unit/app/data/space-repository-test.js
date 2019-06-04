@@ -1,7 +1,7 @@
-const proxyquire = require("proxyquire");
 const testHelper = require("../../../test-helper");
 const Space = require("../../../../app/models").data.space;
 const should = testHelper.should();
+const proxyquire = require("proxyquire");
 
 describe("SpaceRepository", function()
 {
@@ -53,8 +53,10 @@ describe("SpaceRepository", function()
           db: {
             first: () => {  
               expectedSpace._id = spaceId;
-              expectedSpace.filled.push({});
               return expectedSpace.toObject();
+            },
+            select: () =>{
+              return [{}];
             }
           }
         }

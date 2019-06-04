@@ -3,7 +3,7 @@ class SpaceNotFoundResponse {
     this.status = 404;
     this.content = {
       code: "SPACE_ID_NOT_FOUND",
-      content: `Space with id (${spaceId}) not found.`
+      message: `Space with id (${spaceId}) not found.`
     }
   }
 }

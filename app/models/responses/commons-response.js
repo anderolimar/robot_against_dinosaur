@@ -14,7 +14,17 @@ class BadGatewayResponse {
   }
 }
 
+class ValidationResponse {
+  constructor(errors){
+    this.status = 400;
+    this.content = {
+      errors: errors
+    }
+  }
+}
+
 module.exports = {
   SuccessResponse,
-  BadGatewayResponse
+  BadGatewayResponse,
+  ValidationResponse
 }
