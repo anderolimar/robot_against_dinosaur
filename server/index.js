@@ -1,10 +1,13 @@
-var express = require('express');
-var port = parseInt(process.env.APP_PORT || '3000');
+const express = require('express');
+const bodyParser = require('body-parser');
+const port = parseInt(process.env.APP_PORT || '3000');
 
 class Server {
     init(app){
         this.handler = express();
         this.router = express.Router();
+        this.router.use(bodyParser.json());
+        
         app.start(this.router); 
         this.handler.use(this.router);
     }

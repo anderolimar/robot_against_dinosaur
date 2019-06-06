@@ -1,5 +1,7 @@
-var SpacesController = require("./spaces-controller");
+const SpaceController = require("./space-controller");
+const RobotController = require("./robot-controller");
 
 module.exports = {
-    spaces: SpacesController
+    spaces: SpaceController,
+    robot: RobotController
 }

@@ -1,6 +1,6 @@
 const SpaceBusiness = require('../business').space;
 
-class SpacesController {
+class SpaceController {
   static async newSpace(req, res, next) {
     try{
       let result = await SpaceBusiness.createNewSpace()
@@ -23,4 +23,4 @@ class SpacesController {
   }  
 }
 
-module.exports = SpacesController;
+module.exports = SpaceController;
