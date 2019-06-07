@@ -10,12 +10,10 @@ class WhereCompare {
         for(let key of Object.keys(this.where)) {
             let whereProp = this.where[key];
             let refValue = this.ref[key];
-            let positive = false;
             for(let k of Object.keys(whereProp)){
-                positive = Operators[k](refValue, whereProp[k]);
-                if(positive) break;
+                let positive = Operators[k](refValue, whereProp[k]);
+                if(!positive) return false;
             }
-            if(!positive) return false;
         }
         return true;
     }

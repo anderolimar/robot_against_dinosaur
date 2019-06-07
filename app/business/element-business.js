@@ -1,22 +1,62 @@
 const models = require('../models');
 const SpaceRepository = require('../data').space;
 const ElementRepository = require('../data').element;
+const validations = require('./validations/element-validations');
 const Element = models.data.element;
 const SuccessResponse = models.responses.commons.SuccessResponse;
 const BadGatewayResponse = models.responses.commons.BadGatewayResponse;
 const ValidationResponse = models.responses.commons.ValidationResponse;
 const SpaceNotFoundResponse = models.responses.space.SpaceNotFoundResponse;
+const RobotNotFoundResponse = models.responses.element.RobotNotFoundResponse;
 const DatabaseError = models.errors.database.DatabaseError;
 
 class ElementBusiness {
   static async createNewRobot(spaceId, element){
-    const validation = validateRobotElement(element);
+    const validation = validations.validateRobotElement(spaceId, element);
     if(validation.length) return new ValidationResponse(validation);
+    
     return createNewElement(spaceId, element, Element.Types.ROBOT);
   }
   
+  static async turnRobot(spaceId, robotId, direction){
+    const validation = validations.validateRobotId(spaceId, robotId);
+    if(validation.length) return new ValidationResponse(validation);
+    
+    const space = await SpaceRepository.getSpace(spaceId);
+    if(!space) return new SpaceNotFoundResponse(spaceId);
+    
+    const element = await ElementRepository.getElement(robotId);
+    if(!element) return new RobotNotFoundResponse(robotId);  
+    
+    const newFace = FaceMap[direction][element.face];
+    const elementUpdate = { _id: robotId, face: newFace };    
+    
+    return updateElement(spaceId, elementUpdate);
+  }  
+  
+  static async moveRobot(spaceId, robotId, direction){
+    const validation = validations.validateRobotId(spaceId, robotId);
+    if(validation.length) return new ValidationResponse(validation);
+    
+    const space = await SpaceRepository.getSpace(spaceId);
+    if(!space) return new SpaceNotFoundResponse(spaceId);
+    
+    const element = await ElementRepository.getElement(robotId);
+    if(!element) return new RobotNotFoundResponse(robotId);    
+    
+    const moveFunc = MoveFuncMap[direction][element.face];
+    const position = moveFunc(element.row, element.column);
+    
+    const moveValidation = validations.validateRobotMovement(position.row, position.column, direction);
+    if(moveValidation.length) return new ValidationResponse(moveValidation);    
+    
+    const elementUpdate = Object.assign({ _id: robotId }, position);    
+    
+    return updateElement(spaceId, elementUpdate);
+  }  
+  
   static async createNewDinosaur(spaceId, element){
-    const validation = validateElement(element);
+    const validation = validations.validateElement(spaceId, element);
     if(validation.length) return new ValidationResponse(validation);
     return createNewElement(spaceId, element, Element.Types.DINOSAUR);
   }  
@@ -40,15 +80,10 @@ async function createNewElement(spaceId, element, type){
   }
 }  
 
-async function updateElement(spaceId, element, type){
+async function updateElement(spaceId, element){
   try{
-    const space = await SpaceRepository.getSpace(spaceId);
-    if(!space) return new SpaceNotFoundResponse(spaceId);
-    
-    let params = Object.assign({ type: type, spaceId: space._id }, element);
-    let newElement = new Element(params);
-    let savedElement = await ElementRepository.createNewElement(newElement);
-    return new SuccessResponse(savedElement);
+    let result = await ElementRepository.updateElement(element._id, element);
+    return new SuccessResponse({ success: result });
   }
   catch(err){
     if(err instanceof DatabaseError){
@@ -56,38 +91,52 @@ async function updateElement(spaceId, element, type){
     }
     throw err;
   }
-}  
+}
 
-function validateRobotElement(element){
-  let errors = validateElement(element);
-  
-  if(!element.face || !["right", "left", "top", "bottom"].includes(element.face)){
-    errors.push({ 
-      code: "INVALID_FACE_VALUE", 
-      message: "Invalid face value. Values allowed ['right', 'left', 'top', 'bottom']."  
-    })    
-  }
-  return errors;
-}  
+const FaceMap = {
+  left: {
+    right: Element.Faces.TOP,  
+    left: Element.Faces.BOTTOM,
+    top: Element.Faces.LEFT,
+    bottom: Element.Faces.RIGHT
+  },
+  right: {
+    right: Element.Faces.BOTTOM,  
+    left: Element.Faces.TOP,
+    top: Element.Faces.RIGHT,
+    bottom: Element.Faces.LEFT
+  }  
+}
 
-function validateElement(element){
-  let errors = [];
-  
-  if(!element.line || isNaN(element.line) || !Number.isInteger(Number(element.line))){
-    errors.push({ 
-      code: "INVALID_LINE_VALUE", 
-      message: "Invalid line value. Value must be a Integer" 
-    })    
-  }
-  
-  if(!element.column || isNaN(element.column) || !Number.isInteger(Number(element.column))){
-    errors.push({ 
-      code: "INVALID_COLUMN_VALUE", 
-      message: "Invalid column value. Value must be a Integer"  
-    })    
-  }
-
-  return errors;
+const MoveFuncMap = {
+  forward: {
+    right: (row, column) => {
+      return { row, column: column+1 }
+    },  
+    left: (row, column) => {
+      return { row, column: column-1 }
+    }, 
+    top: (row, column) => {
+      return { row: row-1, column }
+    },
+    bottom: (row, column) => {
+      return { row: row+1, column }
+    },
+  },
+  backward: {
+    right: (row, column) => {
+      return { row, column: column-1 }
+    },  
+    left: (row, column) => {
+      return { row, column: column+1 }
+    }, 
+    top: (row, column) => {
+      return { row: row+1, column }
+    },
+    bottom: (row, column) => {
+      return { row: row-1, column }
+    },
+  } 
 }
 
 module.exports = ElementBusiness;

@@ -52,25 +52,29 @@ class InMemoryDB {
 	    if (!this.hasCollection(collectionName)) throw `Invalid collection ${collectionName}`;
 	    let first = Object.keys(whereClause).includes("_id");
 	    delete updateValues["_id"];
+	    let success = false;
 	    for(let idx in this.data[collectionName]){
 	        let data = this.data[collectionName][idx]
 	        let positive = new WhereCompare(data, whereClause).compare();
 	        if(positive) this.data[collectionName][idx] = Object.assign(data, updateValues)
 	        if(first) return true;
+	        success = success || positive;
 		}
-		return true;
+		return success;
 	}
 	
 	delete(collectionName, whereClause){
 	    if (!this.hasCollection(collectionName)) throw `Invalid collection ${collectionName}`;
 	    let first = Object.keys(whereClause).includes("_id");
+	    let success = false;
 	    for(let idx in this.data[collectionName]){
 	        let data = this.data[collectionName][idx]
 	        let positive = new WhereCompare(data, whereClause).compare();
 	        if(positive) this.data[collectionName].splice(idx, 1)
 	        if(first) return true;
+	        success = success || positive;
 		}
-		return true;
+		return success;
 	}	
 }
 

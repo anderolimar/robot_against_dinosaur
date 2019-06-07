@@ -27,17 +27,17 @@ describe("SpacesBusiness", function()
 
       should(newSpace).have.property('content');
       should(newSpace.content).have.property('_id');
-      should(newSpace.content).have.property('lines');
+      should(newSpace.content).have.property('rows');
       should(newSpace.content).have.property('columns');
       should(newSpace.content).have.property('filled');
       
       should(newSpace.content._id).be.equal(expectedSpace._id);
       should(newSpace.content.filled instanceof Array).be.true;
 
-      should(newSpace.content.lines).have.property('start');
-      should(newSpace.content.lines).have.property('end');
-      should(newSpace.content.lines.start).be.equal(expectedSpace.lines.start);
-      should(newSpace.content.lines.end).be.equal(expectedSpace.lines.end);
+      should(newSpace.content.rows).have.property('start');
+      should(newSpace.content.rows).have.property('end');
+      should(newSpace.content.rows.start).be.equal(expectedSpace.rows.start);
+      should(newSpace.content.rows.end).be.equal(expectedSpace.rows.end);
 
       should(newSpace.content.columns).have.property('start');
       should(newSpace.content.columns).have.property('end');
@@ -75,17 +75,17 @@ describe("SpacesBusiness", function()
 
       should(newSpace).have.property('content');
       should(newSpace.content).have.property('_id');
-      should(newSpace.content).have.property('lines');
+      should(newSpace.content).have.property('rows');
       should(newSpace.content).have.property('columns');
       should(newSpace.content).have.property('filled');
       
       should(newSpace.content._id).be.equal(expectedSpace._id);
       should(newSpace.content.filled instanceof Array).be.true;
 
-      should(newSpace.content.lines).have.property('start');
-      should(newSpace.content.lines).have.property('end');
-      should(newSpace.content.lines.start).be.equal(expectedSpace.lines.start);
-      should(newSpace.content.lines.end).be.equal(expectedSpace.lines.end);
+      should(newSpace.content.rows).have.property('start');
+      should(newSpace.content.rows).have.property('end');
+      should(newSpace.content.rows.start).be.equal(expectedSpace.rows.start);
+      should(newSpace.content.rows.end).be.equal(expectedSpace.rows.end);
 
       should(newSpace.content.columns).have.property('start');
       should(newSpace.content.columns).have.property('end');

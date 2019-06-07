@@ -9,7 +9,7 @@ describe("ElementRepository", function()
 
     it('should create and return a new element success.', async function() {
       let expectedElement = new Element({
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT,
         type: Element.Types.ROBOT
@@ -29,7 +29,7 @@ describe("ElementRepository", function()
       let newElement = await ElementRepository.createNewElement(expectedElement);
       
       should(newElement).have.property('_id');
-      should(newElement).have.property('line');
+      should(newElement).have.property('row');
       should(newElement).have.property('column');
       should(newElement).have.property('face');
       should(newElement).have.property('type');
@@ -37,7 +37,7 @@ describe("ElementRepository", function()
       
       should(newElement._id).be.equal(expectedElement._id);
 
-      should(newElement.line).be.equal(expectedElement.line);
+      should(newElement.row).be.equal(expectedElement.row);
       should(newElement.column).be.equal(expectedElement.column);
       should(newElement.face).be.equal(expectedElement.face);
       should(newElement.type).be.equal(expectedElement.type);
@@ -49,7 +49,7 @@ describe("ElementRepository", function()
 
     it('should return element by id success.', async function() {
       let expectedElement = new Element({
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT,
         type: Element.Types.ROBOT
@@ -69,7 +69,7 @@ describe("ElementRepository", function()
       let element = await ElementRepository.getElement(expectedElement);
       
       should(element).have.property('_id');
-      should(element).have.property('line');
+      should(element).have.property('row');
       should(element).have.property('column');
       should(element).have.property('face');
       should(element).have.property('type');
@@ -77,7 +77,7 @@ describe("ElementRepository", function()
       
       should(element._id).be.equal(expectedElement._id);
 
-      should(element.line).be.equal(expectedElement.line);
+      should(element.row).be.equal(expectedElement.row);
       should(element.column).be.equal(expectedElement.column);
       should(element.face).be.equal(expectedElement.face);
       should(element.type).be.equal(expectedElement.type);
@@ -85,44 +85,35 @@ describe("ElementRepository", function()
 
   });
   
-  /*describe('.updateElement', function() {
+  describe('.updateElement', function() {
 
     it('should update element by id success.', async function() {
-      let expectedElement = new Element({
-        line: 2,
-        column: 3,
-        face: Element.Faces.LEFT,
-        type: Element.Types.ROBOT
-      });
+      const elementId = 789
+      const updateElement = {
+        row: 22,
+        column: 33,
+        face: Element.Faces.TOP
+      };      
       
       const ElementRepository = proxyquire("../../../../app/data/element-repository", {
         "../../libs/in-memory-db": {
           db: {
-            first: ()  => {  
-              expectedElement._id = 123;
-              return expectedElement.toObject();
+            update: (col, elem, query)  => {  
+              return col == "elements"
+                     elem.row == updateElement.row &&
+                     elem.column == updateElement.column &&
+                     elem.face == updateElement.face &&
+                     query._id.$eq == elementId
             }
           }
         }
       });
       
-      let element = await ElementRepository.getElement(expectedElement);
+      let result = await ElementRepository.updateElement(elementId, updateElement);
+      should(result).be.true;
       
-      should(element).have.property('_id');
-      should(element).have.property('line');
-      should(element).have.property('column');
-      should(element).have.property('face');
-      should(element).have.property('type');
-      should(element).have.property('spaceId');
-      
-      should(element._id).be.equal(expectedElement._id);
-
-      should(element.line).be.equal(expectedElement.line);
-      should(element.column).be.equal(expectedElement.column);
-      should(element.face).be.equal(expectedElement.face);
-      should(element.type).be.equal(expectedElement.type);
     });
 
-  });*/
+  });
 
 });

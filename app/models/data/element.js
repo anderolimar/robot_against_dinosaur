@@ -2,7 +2,7 @@ class Element {
   constructor(args) {
     let currArgs = args || {}; 
     this._id = currArgs._id ;
-    this.line =  currArgs.line;
+    this.row =  currArgs.row;
     this.column = currArgs.column ;
     this.type = currArgs.type;
     this.face = currArgs.face;

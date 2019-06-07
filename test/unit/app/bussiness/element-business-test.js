@@ -13,12 +13,12 @@ describe("ElementBusiness", function()
   
     it('should create and return a new robot success.', async function() {
       let elementParam = {
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT
       }
       let expectedElement = new Element({
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT,
         type: Element.Types.ROBOT
@@ -45,23 +45,23 @@ describe("ElementBusiness", function()
 
       should(newRobot).have.property('content');
       should(newRobot.content).have.property('_id');
-      should(newRobot.content).have.property('line');
+      should(newRobot.content).have.property('row');
       should(newRobot.content).have.property('column');
       should(newRobot.content).have.property('face');
       should(newRobot.content).have.property('type');
       should(newRobot.content).have.property('spaceId');
       
       should(newRobot.content._id).be.equal(expectedElement._id);
-      should(newRobot.content.line).be.equal(expectedElement.line);
+      should(newRobot.content.row).be.equal(expectedElement.row);
       should(newRobot.content.column).be.equal(expectedElement.column);
       should(newRobot.content.face).be.equal(expectedElement.face);
       should(newRobot.content.type).be.equal(expectedElement.type);
       should(newRobot.content.spaceId).be.equal(expectedElement.spaceId);
     });
 
-    it('should return a error for invalid line value.', async function() {
+    it('should return a error for invalid row value.', async function() {
       let elementParam = {
-        line: "a",
+        row: "a",
         column: 3,
         face: Element.Faces.LEFT
       }
@@ -88,12 +88,12 @@ describe("ElementBusiness", function()
       should(newRobot.content.errors.length).be.equal(1);
       should(newRobot.content.errors[0]).have.property('code');
       should(newRobot.content.errors[0]).have.property('message');
-      should(newRobot.content.errors[0].code).be.equals("INVALID_LINE_VALUE");
+      should(newRobot.content.errors[0].code).be.equals("INVALID_ROW_VALUE");
     });
 
     it('should return a error for invalid column value.', async function() {
       let elementParam = {
-        line: 2,
+        row: 2,
         column: "c",
         face: Element.Faces.LEFT
       }
@@ -125,7 +125,7 @@ describe("ElementBusiness", function()
 
     it('should return a error for invalid face value.', async function() {
       let elementParam = {
-        line: 2,
+        row: 2,
         column: 3,
         face: "lef"
       }
@@ -156,9 +156,9 @@ describe("ElementBusiness", function()
     });
     
     it('should return a error for invalid space.', async function() {
-      let invalidSpaceId = 0
+      let invalidSpaceId = 1111111
       let elementParam = {
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT
       }
@@ -182,7 +182,7 @@ describe("ElementBusiness", function()
       should(newRobot).have.property('content');
       should(newRobot.content).have.property('code');
       should(newRobot.content).have.property('message');
-      should(newRobot.content.code).be.equals("SPACE_ID_NOT_FOUND");
+      should(newRobot.content.code).be.equals("SPACE_NOT_FOUND");
     });    
 
   });
@@ -193,11 +193,11 @@ describe("ElementBusiness", function()
   
     it('should create and return a new dinosaur success.', async function() {
       let elementParam = {
-        line: 2,
+        row: 2,
         column: 3
       }
       let expectedElement = new Element({
-        line: 2,
+        row: 2,
         column: 3,
         type: Element.Types.DINOSAUR
       });      
@@ -223,21 +223,21 @@ describe("ElementBusiness", function()
 
       should(newDinosaur).have.property('content');
       should(newDinosaur.content).have.property('_id');
-      should(newDinosaur.content).have.property('line');
+      should(newDinosaur.content).have.property('row');
       should(newDinosaur.content).have.property('column');
       should(newDinosaur.content).have.property('type');
       should(newDinosaur.content).have.property('spaceId');
       
       should(newDinosaur.content._id).be.equal(expectedElement._id);
-      should(newDinosaur.content.line).be.equal(expectedElement.line);
+      should(newDinosaur.content.row).be.equal(expectedElement.row);
       should(newDinosaur.content.column).be.equal(expectedElement.column);
       should(newDinosaur.content.type).be.equal(expectedElement.type);
       should(newDinosaur.content.spaceId).be.equal(expectedElement.spaceId);
     });
 
-    it('should return a error for invalid line value.', async function() {
+    it('should return a error for invalid row value.', async function() {
       let elementParam = {
-        line: "a",
+        row: "a",
         column: 3
       }
     
@@ -263,12 +263,12 @@ describe("ElementBusiness", function()
       should(newDinosaur.content.errors.length).be.equal(1);
       should(newDinosaur.content.errors[0]).have.property('code');
       should(newDinosaur.content.errors[0]).have.property('message');
-      should(newDinosaur.content.errors[0].code).be.equals("INVALID_LINE_VALUE");
+      should(newDinosaur.content.errors[0].code).be.equals("INVALID_ROW_VALUE");
     });
 
     it('should return a error for invalid column value.', async function() {
       let elementParam = {
-        line: 2,
+        row: 2,
         column: "c"
       }
     
@@ -298,9 +298,9 @@ describe("ElementBusiness", function()
     });
 
     it('should return a error for invalid space.', async function() {
-      let invalidSpaceId = 0
+      let invalidSpaceId = 1111111
       let elementParam = {
-        line: 2,
+        row: 2,
         column: 3,
         face: Element.Faces.LEFT
       }
@@ -324,8 +324,347 @@ describe("ElementBusiness", function()
       should(newDinosaur).have.property('content');
       should(newDinosaur.content).have.property('code');
       should(newDinosaur.content).have.property('message');
-      should(newDinosaur.content.code).be.equals("SPACE_ID_NOT_FOUND");
+      should(newDinosaur.content.code).be.equals("SPACE_NOT_FOUND");
     });    
 
   });  
+  
+  describe('.turnRobot', function() {
+    const spaceId = 123
+    const robotId = 555
+    const expectedSpace = new Space({_id: spaceId});
+  
+    it('should turn left and update face from left to bottom.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'left',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('bottom');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'left');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });
+    
+    it('should turn left and update face from right to top.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'right',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('top');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'left');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });    
+    
+    it('should turn left and update face from top to left.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'top',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('left');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'left');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });  
+    
+    it('should turn left and update face from bottom to right.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'bottom',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('right');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'left');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });      
+
+    it('should turn right and update face from left to top.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'left',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('top');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });
+    
+    it('should turn right and update face from right to bottom.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'right',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('bottom');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });    
+    
+    it('should turn right and update face from top to right.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'top',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('right');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });  
+    
+    it('should turn right and update face from bottom to left.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'bottom',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () =>  elementResult,
+            updateElement: async (elemId, elem) => {
+              should(elem).have.property('face');
+              should(elem.face).be.equal('left');
+            }
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, robotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(200);
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('success');
+      should(turnRobotResult.content.success).be.true;
+    });      
+
+    it('should return a error for invalid space.', async function() {
+      let invalidSpaceId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => null
+          },
+          element: {
+            getElement: async () => null
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(invalidSpaceId, robotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(404);
+
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('code');
+      should(turnRobotResult.content).have.property('message');
+      should(turnRobotResult.content.code).be.equals("SPACE_NOT_FOUND");
+    });    
+
+    it('should return a error for invalid robot.', async function() {
+      let invalidRobotId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElement: async () => null
+          }
+        }
+      });
+      
+      const turnRobotResult = await ElementBusiness.turnRobot(spaceId, invalidRobotId, 'right');
+      
+      should(turnRobotResult).have.property('status');
+      should(turnRobotResult.status).be.equal(404);
+
+      should(turnRobotResult).have.property('content');
+      should(turnRobotResult.content).have.property('code');
+      should(turnRobotResult.content).have.property('message');
+      should(turnRobotResult.content.code).be.equals("ROBOT_NOT_FOUND");
+    });  
+
+  });    
 });

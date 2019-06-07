@@ -14,7 +14,7 @@ describe("POST /spaces/:spaceId/robots", function()
     .then(async response => {
       should(response.body).have.property('_id');
       const spaceId = response.body._id;
-      const elementParams = {line: 3, column: 5, face: "left"}
+      const elementParams = {row: 3, column: 5, face: "left"}
       
       await request(server.handler)
       .post(`/spaces/${spaceId}/robots`)
@@ -25,12 +25,12 @@ describe("POST /spaces/:spaceId/robots", function()
       .then(response => {
           should(response.body).have.property('_id');
           should(response.body).have.property('face');
-          should(response.body).have.property('line');
+          should(response.body).have.property('row');
           should(response.body).have.property('column');
           should(response.body).have.property('spaceId');
           should(response.body).have.property('type');
           should(response.body.face).be.equal(elementParams.face);
-          should(response.body.line).be.equal(elementParams.line);
+          should(response.body.row).be.equal(elementParams.row);
           should(response.body.column).be.equal(elementParams.column);
           should(response.body.spaceId).be.equal(spaceId);
           should(response.body.type).be.equal("robot");

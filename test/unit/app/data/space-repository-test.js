@@ -23,17 +23,17 @@ describe("SpaceRepository", function()
       let newSpace = await SpaceRepository.createNewSpace(expectedSpace);
       
       should(newSpace).have.property('_id');
-      should(newSpace).have.property('lines');
+      should(newSpace).have.property('rows');
       should(newSpace).have.property('columns');
       should(newSpace).have.property('filled');
       
       should(newSpace._id).be.equal(expectedSpace._id);
       should(newSpace.filled instanceof Array).be.true;
 
-      should(newSpace.lines).have.property('start');
-      should(newSpace.lines).have.property('end');
-      should(newSpace.lines.start).be.equal(expectedSpace.lines.start);
-      should(newSpace.lines.end).be.equal(expectedSpace.lines.end);
+      should(newSpace.rows).have.property('start');
+      should(newSpace.rows).have.property('end');
+      should(newSpace.rows.start).be.equal(expectedSpace.rows.start);
+      should(newSpace.rows.end).be.equal(expectedSpace.rows.end);
 
       should(newSpace.columns).have.property('start');
       should(newSpace.columns).have.property('end');
@@ -65,7 +65,7 @@ describe("SpaceRepository", function()
       let space = await SpaceRepository.getSpace(spaceId);
       
       should(space).have.property('_id');
-      should(space).have.property('lines');
+      should(space).have.property('rows');
       should(space).have.property('columns');
       should(space).have.property('filled');
       
@@ -73,10 +73,10 @@ describe("SpaceRepository", function()
       should(space.filled instanceof Array).be.true;
       should(space.filled.length).be.equal(1);
 
-      should(space.lines).have.property('start');
-      should(space.lines).have.property('end');
-      should(space.lines.start).be.equal(expectedSpace.lines.start);
-      should(space.lines.end).be.equal(expectedSpace.lines.end);
+      should(space.rows).have.property('start');
+      should(space.rows).have.property('end');
+      should(space.rows.start).be.equal(expectedSpace.rows.start);
+      should(space.rows.end).be.equal(expectedSpace.rows.end);
 
       should(space.columns).have.property('start');
       should(space.columns).have.property('end');

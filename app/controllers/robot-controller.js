@@ -4,8 +4,8 @@ class RobotController {
   static async newRobot(req, res, next) {
     try{
       const { spaceId } = req.params;
-      const { line, column, face } = req.body;
-      const result = await ElementBusiness.createNewRobot(spaceId, { line, column, face });
+      const { row, column, face } = req.body;
+      const result = await ElementBusiness.createNewRobot(spaceId, { row, column, face });
       res.status(result.status).json(result.content);
     }
     catch(err){

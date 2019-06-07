@@ -17,11 +17,11 @@ describe("GET /spaces/new", function()
           should(response.body).have.property('filled');
           should(response.body.filled instanceof Array).be.true;
 
-          should(response.body).have.property('lines');
-          should(response.body.lines).have.property('start');
-          should(response.body.lines).have.property('end');
-          should(response.body.lines.start).be.equal(1);
-          should(response.body.lines.end).be.equal(50);
+          should(response.body).have.property('rows');
+          should(response.body.rows).have.property('start');
+          should(response.body.rows).have.property('end');
+          should(response.body.rows.start).be.equal(1);
+          should(response.body.rows.end).be.equal(50);
 
           should(response.body).have.property('columns');
           should(response.body.columns).have.property('start');
