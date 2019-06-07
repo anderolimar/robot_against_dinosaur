@@ -47,7 +47,7 @@ describe("ElementRepository", function()
   
   describe('.getElement', function() {
 
-    it('should return space by id success.', async function() {
+    it('should return element by id success.', async function() {
       let expectedElement = new Element({
         line: 2,
         column: 3,
@@ -85,4 +85,44 @@ describe("ElementRepository", function()
 
   });
   
+  /*describe('.updateElement', function() {
+
+    it('should update element by id success.', async function() {
+      let expectedElement = new Element({
+        line: 2,
+        column: 3,
+        face: Element.Faces.LEFT,
+        type: Element.Types.ROBOT
+      });
+      
+      const ElementRepository = proxyquire("../../../../app/data/element-repository", {
+        "../../libs/in-memory-db": {
+          db: {
+            first: ()  => {  
+              expectedElement._id = 123;
+              return expectedElement.toObject();
+            }
+          }
+        }
+      });
+      
+      let element = await ElementRepository.getElement(expectedElement);
+      
+      should(element).have.property('_id');
+      should(element).have.property('line');
+      should(element).have.property('column');
+      should(element).have.property('face');
+      should(element).have.property('type');
+      should(element).have.property('spaceId');
+      
+      should(element._id).be.equal(expectedElement._id);
+
+      should(element.line).be.equal(expectedElement.line);
+      should(element.column).be.equal(expectedElement.column);
+      should(element.face).be.equal(expectedElement.face);
+      should(element.type).be.equal(expectedElement.type);
+    });
+
+  });*/
+
 });

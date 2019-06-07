@@ -186,4 +186,146 @@ describe("ElementBusiness", function()
     });    
 
   });
+
+  describe('.createNewDinosaur', function() {
+    const spaceId = 123
+    let expectedSpace = new Space({_id: spaceId});
+  
+    it('should create and return a new dinosaur success.', async function() {
+      let elementParam = {
+        line: 2,
+        column: 3
+      }
+      let expectedElement = new Element({
+        line: 2,
+        column: 3,
+        type: Element.Types.DINOSAUR
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            createNewElement: async () => { 
+              expectedElement._id = 456
+              return expectedElement
+            }
+          }
+        }
+      });
+      
+      const newDinosaur = await ElementBusiness.createNewDinosaur(spaceId, elementParam);
+      
+      should(newDinosaur).have.property('status');
+      should(newDinosaur.status).be.equal(200);
+
+      should(newDinosaur).have.property('content');
+      should(newDinosaur.content).have.property('_id');
+      should(newDinosaur.content).have.property('line');
+      should(newDinosaur.content).have.property('column');
+      should(newDinosaur.content).have.property('type');
+      should(newDinosaur.content).have.property('spaceId');
+      
+      should(newDinosaur.content._id).be.equal(expectedElement._id);
+      should(newDinosaur.content.line).be.equal(expectedElement.line);
+      should(newDinosaur.content.column).be.equal(expectedElement.column);
+      should(newDinosaur.content.type).be.equal(expectedElement.type);
+      should(newDinosaur.content.spaceId).be.equal(expectedElement.spaceId);
+    });
+
+    it('should return a error for invalid line value.', async function() {
+      let elementParam = {
+        line: "a",
+        column: 3
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            createNewElement: async () => null
+          }
+        }
+      });
+      
+      const newDinosaur = await ElementBusiness.createNewDinosaur(spaceId, elementParam);
+      
+      should(newDinosaur).have.property('status');
+      should(newDinosaur.status).be.equal(400);
+
+      should(newDinosaur).have.property('content');
+      should(newDinosaur.content).have.property('errors');
+      
+      should(newDinosaur.content.errors.length).be.equal(1);
+      should(newDinosaur.content.errors[0]).have.property('code');
+      should(newDinosaur.content.errors[0]).have.property('message');
+      should(newDinosaur.content.errors[0].code).be.equals("INVALID_LINE_VALUE");
+    });
+
+    it('should return a error for invalid column value.', async function() {
+      let elementParam = {
+        line: 2,
+        column: "c"
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            createNewElement: async () => null
+          }
+        }
+      });
+      
+      const newDinosaur = await ElementBusiness.createNewDinosaur(spaceId, elementParam);
+      
+      should(newDinosaur).have.property('status');
+      should(newDinosaur.status).be.equal(400);
+
+      should(newDinosaur).have.property('content');
+      should(newDinosaur.content).have.property('errors');
+      
+      should(newDinosaur.content.errors.length).be.equal(1);
+      should(newDinosaur.content.errors[0]).have.property('code');
+      should(newDinosaur.content.errors[0]).have.property('message');
+      should(newDinosaur.content.errors[0].code).be.equals("INVALID_COLUMN_VALUE");
+    });
+
+    it('should return a error for invalid space.', async function() {
+      let invalidSpaceId = 0
+      let elementParam = {
+        line: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => null
+          },
+          element: {
+            createNewElement: async () => null
+          }
+        }
+      });
+      
+      const newDinosaur = await ElementBusiness.createNewDinosaur(invalidSpaceId, elementParam);
+      
+      should(newDinosaur).have.property('status');
+      should(newDinosaur.status).be.equal(404);
+
+      should(newDinosaur).have.property('content');
+      should(newDinosaur.content).have.property('code');
+      should(newDinosaur.content).have.property('message');
+      should(newDinosaur.content.code).be.equals("SPACE_ID_NOT_FOUND");
+    });    
+
+  });  
 });

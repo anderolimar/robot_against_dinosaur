@@ -27,7 +27,25 @@ async function createNewElement(spaceId, element, type){
     const space = await SpaceRepository.getSpace(spaceId);
     if(!space) return new SpaceNotFoundResponse(spaceId);
     
-    let params = Object.assign({ type: type, spaceId: spaceId }, element);
+    let params = Object.assign({ type: type, spaceId: space._id }, element);
+    let newElement = new Element(params);
+    let savedElement = await ElementRepository.createNewElement(newElement);
+    return new SuccessResponse(savedElement);
+  }
+  catch(err){
+    if(err instanceof DatabaseError){
+      return new BadGatewayResponse();
+    }
+    throw err;
+  }
+}  
+
+async function updateElement(spaceId, element, type){
+  try{
+    const space = await SpaceRepository.getSpace(spaceId);
+    if(!space) return new SpaceNotFoundResponse(spaceId);
+    
+    let params = Object.assign({ type: type, spaceId: space._id }, element);
     let newElement = new Element(params);
     let savedElement = await ElementRepository.createNewElement(newElement);
     return new SuccessResponse(savedElement);

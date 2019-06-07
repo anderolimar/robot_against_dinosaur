@@ -3,7 +3,7 @@ const testHelper = require('../../test-helper');
 const server = testHelper.server();
 const should = testHelper.should();
 
-describe("/spaces/new", function()
+describe("GET /spaces/new", function()
 {
   it('should create and return a new space success.', async function() {
     await request(server.handler)

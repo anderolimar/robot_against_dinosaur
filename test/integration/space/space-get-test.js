@@ -6,7 +6,7 @@ const SpaceRepository = require('../../../app/data/space-repository');
 const server = testHelper.server();
 const should = testHelper.should();
 
-describe("/spaces/:id", function()
+describe("GET /spaces/:id", function()
 {
   it('should return space success.', async function() {
     let space = await SpaceRepository.createNewSpace(new Space());
