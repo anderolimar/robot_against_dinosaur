@@ -3,55 +3,80 @@
   <title>README | Robots against Dinosaurs</title>
   <style>
     body {
-      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+		font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
     }
     h1 {
-      font-size: 2em;
+		font-size: 2em;
     }
     h2 {
-      font-size: 1.5em;
+		font-size: 1.5em;
     }
     h1, h2 {
-      border-bottom: 1px solid #eaecef;
-      padding-bottom: .3em;
-      font-weight: 600;
-      line-height: 1.25;
-      margin-bottom: 16px;
-      margin-top: 24px;
+		border-bottom: 1px solid #eaecef;
+		padding-bottom: .3em;
+		font-weight: 600;
+		line-height: 1.25;
+		margin-bottom: 16px;
+		margin-top: 24px;
     }
     pre {
-      background-color: #f6f8fa;
-      border-radius: 3px;
-      font-size: 85%;
-      line-height: 1.45;
-      overflow: auto;
-      padding: 25px 25px 10px;
+		background-color: #f6f8fa;
+		border-radius: 3px;
+		font-size: 85%;
+		line-height: 1.45;
+		overflow: auto;
+		padding: 25px 25px 10px;
     }
 
     pre code {
-      background-color: transparent;
-      border: 0;
-      display: inline;
-      line-height: inherit;
-      margin: 0;
-      overflow: visible;
-      padding: 0;
-      word-wrap: normal;
-      font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+		background-color: transparent;
+		border: 0;
+		display: inline;
+		line-height: inherit;
+		margin: 0;
+		overflow: visible;
+		padding: 0;
+		word-wrap: normal;
+		font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
     }
     .center {
-      margin: auto;
-      width: 70%;
-      padding: 10px;
-      border: 1px solid #cdcdcd;
-      padding: 30px;	
+		margin: auto;
+		width: 70%;
+		padding: 10px;
+		border: 1px solid #cdcdcd;
+		padding: 30px;	
     }
 
     blockquote {
-      border-left: .25em solid #dfe2e5;
-      color: #6a737d;
-      padding: 0 1em;
+		border-left: .25em solid #dfe2e5;
+		color: #6a737d;
+		padding: 0 1em;
     }
+	table {
+		display: block;
+		overflow: auto;
+		width: 100%;
+		margin-bottom: 16px;
+		margin-top: 0;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}	
+	table tr {
+		background-color: #fff;
+		border-top: 1px solid #c6cbd1;
+	}
+    table td, table th {
+		border: 1px solid #dfe2e5;
+		padding: 6px 13px;
+	}	
+	hr {
+		background-color: #e1e4e8;
+		border: 0;
+		height: .25em;
+		margin: 24px 0;
+		padding: 0;
+		overflow: hidden;
+	}	
   </style>
 
 </head>
@@ -94,8 +119,64 @@
 
       <pre><code>$ npm test
       </code></pre>
-
+		
+	  <hr></hr>	
       <h2 id="documentation">Documentation</h2>
+	  
+			<table>
+			<thead>
+			<tr>
+			<th>ACTION</th>
+			<th>METHOD</th>
+			<th>URL</th>
+			<th>Details</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td>Create New Space</td>
+			<td>GET</td>
+			<td>{host}/spaces/new</td>
+			<td><a href="#spacesnew">Space New Details</a></td>
+			</tr>
+			<tr>
+			<td>Get Space</td>
+			<td>GET</td>
+			<td>{host}/spaces/{spaceid}</td>
+			<td><a href="#spacesspaceid">Space Details</a></td>
+			</tr>
+			<tr>
+			<td>Create New Robot</td>
+			<td>POST</td>
+			<td>{host}/spaces/{spaceid}/robots</td>
+			<td><a href="#robotrequest">RobotRequest</a></td>
+			</tr>
+			<tr>
+			<td>Turn Robot Left</td>
+			<td>PUT</td>
+			<td>{host}/spaces/{spaceid}/robots/{robotid}/turnleft</td>
+			<td><a href="#robotresponsesuccess">RobotResponse</a></td>
+			</tr>
+			<tr>
+			<td>Turn Robot Right</td>
+			<td>PUT</td>
+			<td>{host}/spaces/{spaceid}/robots/{robotid}/turnright</td>
+			<td><a href="#robotresponsesuccess">RobotResponse</a></td>
+			</tr>
+			<tr>
+			<td>Move Robot Forward</td>
+			<td>PUT</td>
+			<td>{host}/spaces/{spaceid}/robots/{robotid}/moveforward</td>
+			<td><a href="#robotresponsesuccess">RobotResponse</a></td>
+			</tr>
+			<tr>
+			<td>Move Robot Backward</td>
+			<td>PUT</td>
+			<td>{host}/spaces/{spaceid}/robots/{robotid}/movebackward</td>
+			<td><a href="#robotresponsesuccess">RobotResponse</a></td>
+			</tr>
+			</tbody>
+			</table>	  
     </div>
   </body>
 </html>
