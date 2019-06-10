@@ -19,7 +19,7 @@ Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackwar
 
 ## Routes details
 
-### Route */spaces/new*
+### Route /spaces/new
 
 Create new space
 
@@ -29,7 +29,7 @@ Code | RESULT
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
 
-### Route */spaces/{spaceid}*
+### Route /spaces/{spaceid}
 
 Create space by id
 
@@ -39,7 +39,7 @@ Code | RESULT
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
 
-### Route */spaces/{spaceid}/robots*
+### Route /spaces/{spaceid}/robots
 
 Create new robot
 
