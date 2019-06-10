@@ -70,22 +70,5 @@ describe("PUT /spaces/:spaceId/robots/:robotId/turnleft", function()
     
     should(responseTurnLeft.body).have.property('success');
     should(responseTurnLeft.body.success).be.true;  
-
-    /*await testHelper.sleep(1000).then(async _ => {
-
-    const responseSpace = await request(server.handler)
-      .get(`/spaces/${spaceId}`)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200)
-
-    console.log(`####### response: ${JSON.stringify(responseSpace)}`)
-    should(responseSpace.body).have.property('filled');
-    should(responseSpace.body.filled instanceof Array).be.true;
-    should(responseSpace.body.filled.length).be.equals(1);
-
-    should(responseSpace.body.filled[0]).have.property('face');
-    should(responseSpace.body.filled[0].face).be.equal("top");
-  });*/
   });        
 });    
