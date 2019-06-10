@@ -16,12 +16,13 @@ Turn Robot Right | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [
 Move Robot Forward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/moveforward | [RobotResponse](#robotresponsesuccess)
 Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [RobotResponse](#robotresponsesuccess) 
 
+---
 
 ## Routes details
 
 ### /spaces/new
 
-Create new space
+> Create new space
 
 #### Responses
 Code | RESULT 
@@ -31,7 +32,7 @@ Code | RESULT
 
 ### /spaces/{spaceid}
 
-Create space by id
+> Create space by id
 
 #### Responses
 Code | RESULT 
@@ -41,7 +42,7 @@ Code | RESULT
 
 ### /spaces/{spaceid}/robots
 
-Create new robot
+> Create new robot
 
 #### Responses
 Code | RESULT 
@@ -49,7 +50,7 @@ Code | RESULT
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
 
-
+---
 
 ## Models
 
