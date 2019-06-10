@@ -6,24 +6,49 @@ You can create Spaces, Robots e Dinosaurs. Only Robots can move forward or backw
 
 ## Routes
 
-METHOD | URL | Responses
------------- | ------------- | ------------- 
-GET | {host}/spaces/new | [Space New Responses](#spacesnew) 
-GET | {host}/spaces/{spaceid} | [SpaceResponseSuccess](#spaceresponsesuccess) 
-POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) 
-PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [RobotResponse](#robotresponsesuccess)
-PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [RobotResponse](#robotresponsesuccess) 
-PUT | {host}/spaces/{spaceid}/robots/{robotid}/moveforward | [RobotResponse](#robotresponsesuccess)
-PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [RobotResponse](#robotresponsesuccess) 
+ACTION | METHOD | URL | Details
+------------ | ------------- | ------------- | ------------- 
+Create New Space | GET | {host}/spaces/new | [Space New Details](#routespacesnew) 
+Get Space | GET | {host}/spaces/{spaceid} | [Space Details](#routespacesspaceid) 
+Create New Robot | POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) 
+Turn Robot Left | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [RobotResponse](#robotresponsesuccess)
+Turn Robot Right | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [RobotResponse](#robotresponsesuccess) 
+Move Robot Forward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/moveforward | [RobotResponse](#robotresponsesuccess)
+Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [RobotResponse](#robotresponsesuccess) 
 
 
 ## Routes details
 
-### /spaces/new
+### Route */spaces/new*
 
+Create new space
+
+#### Responses
 Code | RESULT 
 ------------ | -------------
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
+404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
+
+### Route */spaces/{spaceid}*
+
+Create space by id
+
+#### Responses
+Code | RESULT 
+------------ | -------------
+200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
+404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
+
+### Route */spaces/{spaceid}/robots*
+
+Create new robot
+
+#### Responses
+Code | RESULT 
+------------ | -------------
+200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
+404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
+
 
 
 ## Models
