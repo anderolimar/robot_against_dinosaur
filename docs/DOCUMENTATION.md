@@ -8,8 +8,8 @@ You can create Spaces, Robots e Dinosaurs. Only Robots can move forward or backw
 
 ACTION | METHOD | URL | Details
 ------------ | ------------- | ------------- | ------------- 
-Create New Space | GET | {host}/spaces/new | [Space New Details](#routespacesnew) 
-Get Space | GET | {host}/spaces/{spaceid} | [Space Details](#routespacesspaceid) 
+Create New Space | GET | {host}/spaces/new | [Space New Details](#route_spacesnew) 
+Get Space | GET | {host}/spaces/{spaceid} | [Space Details](#route_spacesspaceid) 
 Create New Robot | POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) 
 Turn Robot Left | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [RobotResponse](#robotresponsesuccess)
 Turn Robot Right | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [RobotResponse](#robotresponsesuccess) 
