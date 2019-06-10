@@ -6,11 +6,24 @@ You can create Spaces, Robots e Dinosaurs. Only Robots can move forward or backw
 
 ## Routes
 
-METHOD | URL | BODY | RESULT
------------- | ------------- | ------------- | -------------
-GET | {host}/spaces/new | - | [SpaceResponse](#spaceresponse)
-GET | {host}/spaces/{spaceid} | - | [SpaceResponse](#spaceresponse)
-POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) | [RobotResponse](#robotresponse)
+METHOD | URL | Responses
+------------ | ------------- | ------------- 
+GET | {host}/spaces/new | [Space New Responses](#spacesnew) 
+GET | {host}/spaces/{spaceid} | [SpaceResponseSuccess](#spaceresponsesuccess) 
+POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) 
+PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [RobotResponse](#robotresponsesuccess)
+PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [RobotResponse](#robotresponsesuccess) 
+PUT | {host}/spaces/{spaceid}/robots/{robotid}/moveforward | [RobotResponse](#robotresponsesuccess)
+PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [RobotResponse](#robotresponsesuccess) 
+
+
+## Routes details
+
+### /spaces/new
+
+Code | RESULT 
+------------ | -------------
+200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 
 
 ## Models
@@ -24,5 +37,25 @@ POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) | [RobotRe
   row: integer,
   column: integer,
   face: "right|left|top|bottom"
+}
+```
+### Responses
+
+#### SpaceResponseSuccess
+
+```javascript
+{
+  _id: integer
+  rows: { start: integer, end: integer },
+  columns:  { start: integer, end: integer },
+  filled: array (Robot|Dinosaur)
+}
+```
+#### SpaceNotFoundResponse
+
+```javascript
+{
+  code: "SPACE_NOT_FOUND"
+  message: string
 }
 ```
