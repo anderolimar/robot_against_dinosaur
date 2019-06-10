@@ -8,8 +8,8 @@ You can create Spaces, Robots e Dinosaurs. Only Robots can move forward or backw
 
 ACTION | METHOD | URL | Details
 ------------ | ------------- | ------------- | ------------- 
-Create New Space | GET | {host}/spaces/new | [Space New Details](#route_spacesnew) 
-Get Space | GET | {host}/spaces/{spaceid} | [Space Details](#route_spacesspaceid) 
+Create New Space | GET | {host}/spaces/new | [Space New Details](#spacesnew) 
+Get Space | GET | {host}/spaces/{spaceid} | [Space Details](#spacesspaceid) 
 Create New Robot | POST | {host}/spaces/{spaceid}/robots | [RobotRequest](#robotrequest) 
 Turn Robot Left | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [RobotResponse](#robotresponsesuccess)
 Turn Robot Right | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [RobotResponse](#robotresponsesuccess) 
@@ -19,7 +19,7 @@ Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackwar
 
 ## Routes details
 
-### Route /spaces/new
+### /spaces/new
 
 Create new space
 
@@ -29,7 +29,7 @@ Code | RESULT
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
 
-### Route /spaces/{spaceid}
+### /spaces/{spaceid}
 
 Create space by id
 
@@ -39,7 +39,7 @@ Code | RESULT
 200 | [SpaceResponseSuccess](#spaceresponsesuccess) 
 404 | [SpaceNotFoundResponse](#spacenotfoundresponse)
 
-### Route /spaces/{spaceid}/robots
+### /spaces/{spaceid}/robots
 
 Create new robot
 
