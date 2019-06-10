@@ -19,6 +19,11 @@ class TestsHelper
       })
     }
 
+    static compareArray(arr1, arr2){
+      if(arr1.length != arr2.length) return false;
+      return arr1.reduce((eq, v) => eq && arr2.includes(v), true);
+    }
+
     static server(){
         server.init(app);
         return server;        

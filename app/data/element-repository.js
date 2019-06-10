@@ -33,10 +33,14 @@ class ElementsRepository {
     });
   }   
   
-  static getElementByPosition(position){
+  static getElementByPosition(position, spaceId){
     return new Promise((resolve, reject) => {
       try {
-        let query = { row: { $eq: position.row }, column: { $eq: position.column } };
+        let query = { 
+          row: { $eq: position.row }, 
+          column: { $eq: position.column }, 
+          spaceId: { $eq: spaceId }
+        };
         let resultElement = db.first(elementCollectionName, query);
         if(!resultElement) resolve(null);
         let fromObjElement = Element.fromObject(resultElement) 
@@ -61,10 +65,15 @@ class ElementsRepository {
     });
   }   
 
-  static deleteElementsByRowsAndColumns(rows, columns, type){
+  static deleteElementsByRowsAndColumns(rows, columns, type, spaceId){
     return new Promise((resolve, reject) => {
       try {
-        let query = { row: { $in: rows }, column: { $in: columns }, type: { $eq: type } };
+        let query = { 
+          row: { $in: rows }, 
+          column: { $in: columns }, 
+          type: { $eq: type }, 
+          spaceId: { $eq: spaceId }
+        };
         let resultUpdate = db.delete(elementCollectionName, query);
         resolve(resultUpdate);
       }

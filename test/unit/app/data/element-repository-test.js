@@ -92,6 +92,7 @@ describe("ElementRepository", function()
   describe('.getElementByPosition', function() {
 
     it('should return element by position success.', async function() {
+      const spaceId = 321
       const position = {
         row: 2,
         column: 3
@@ -108,7 +109,9 @@ describe("ElementRepository", function()
         "../../libs/in-memory-db": {
           db: {
             first: (_col, query)  => {  
-              if(query.row.$eq == 2 && query.column.$eq == 3){
+              if(query.row.$eq == 2 && 
+                 query.column.$eq == 3 && 
+                 query.spaceId.$eq == spaceId){
                 return expectedElement.toObject();
               }
               return null
@@ -117,7 +120,7 @@ describe("ElementRepository", function()
         }
       });
       
-      let element = await ElementRepository.getElementByPosition(position);
+      let element = await ElementRepository.getElementByPosition(position, spaceId);
       
       should(element).have.property('_id');
       should(element).have.property('row');
@@ -161,6 +164,35 @@ describe("ElementRepository", function()
       });
       
       let result = await ElementRepository.updateElement(elementId, updateElement);
+      should(result).be.true;
+      
+    });
+
+  });
+
+  describe('.deleteElementsByRowsAndColumns', function() {
+
+    it('should delete elements by rows and columns.', async function() {
+      const rows = [1, 2, 3]
+      const columns = [1, 2, 3]
+      const type = Element.Types.DINOSAUR
+      const spaceId = 321
+
+      const ElementRepository = proxyquire("../../../../app/data/element-repository", {
+        "../../libs/in-memory-db": {
+          db: {
+            delete: (col, query)  => {  
+              return col == "elements" &&
+                    testHelper.compareArray(query.row.$in, rows)  &&
+                    testHelper.compareArray(query.column.$in, columns)  &&
+                    query.type.$eq ==type  &&
+                    query.spaceId.$eq == spaceId
+            }
+          }
+        }
+      });
+      
+      let result = await ElementRepository.deleteElementsByRowsAndColumns(rows, columns, type, spaceId);
       should(result).be.true;
       
     });

@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "mocha test/**/*-test.js",
+    "coverage": "nyc --include='app/**/*.js' --reporter=text mocha test/**/*-test.js",
     "start": "node main.js",
     "start-local": "nodemon node main.js"
   },
@@ -16,6 +17,7 @@
   "devDependencies": {
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
     "proxyquire": "^2.1.0",
     "should": "^13.2.3",
     "supertest": "^4.0.2"

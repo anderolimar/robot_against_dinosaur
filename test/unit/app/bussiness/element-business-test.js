@@ -1109,4 +1109,112 @@ describe("ElementBusiness", function()
     });       
 
   }); 
+  
+  describe('.robotAttack', function() {
+    const spaceId = 123
+    const robotId = 555
+    const expectedSpace = new Space({_id: spaceId});
+  
+    it('should robot attack remove any dinosaur around.', async function() {
+      const elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'left',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });     
+      
+      const expectedRows = [1,2,3];
+      const expectedColumns = [2,3,4];
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            deleteElementsByRowsAndColumns: async (rows, columns, type, currSpaceId) => {
+              should(testHelper.compareArray(expectedRows, rows)).be.true;
+              should(testHelper.compareArray(expectedColumns, columns)).be.true;
+              should(type).be.equal(Element.Types.DINOSAUR);
+              should(currSpaceId).be.equal(spaceId);
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.robotAttack(spaceId, robotId);
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });
+    
+ 
+    it('should return a error for invalid space.', async function() {
+      let invalidSpaceId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => null
+          },
+          element: {
+            getElementById: async () => null
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.robotAttack(spaceId, robotId);
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(404);
+
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('code');
+      should(moveRobotResult.content).have.property('message');
+      should(moveRobotResult.content.code).be.equals("SPACE_NOT_FOUND");
+    });    
+
+    it('should return a error for invalid robot.', async function() {
+      let invalidRobotId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () => null
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.robotAttack(spaceId, robotId);
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(404);
+
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('code');
+      should(moveRobotResult.content).have.property('message');
+      should(moveRobotResult.content.code).be.equals("ROBOT_NOT_FOUND");      
+    });  
+
+
+  });   
 });

@@ -4,13 +4,14 @@ const Space = models.data.space;
 const SuccessResponse = models.responses.commons.SuccessResponse;
 const BadGatewayResponse = models.responses.commons.BadGatewayResponse;
 const SpaceNotFoundResponse = models.responses.space.SpaceNotFoundResponse;
+const ValidationResponse = models.responses.commons.ValidationResponse;
 const DatabaseError = models.errors.database.DatabaseError;
 
 class SpaceBusiness {
   static async createNewSpace(){
     try{
-      let newSpace = new Space();
-      let savedSpace = await SpaceRepository.createNewSpace(newSpace);
+      const newSpace = new Space();
+      const savedSpace = await SpaceRepository.createNewSpace(newSpace);
       return new SuccessResponse(savedSpace);
     }
     catch(err){
@@ -23,11 +24,13 @@ class SpaceBusiness {
 
   static async getSpace(spaceId){
     try {
-      let space = await SpaceRepository.getSpace(spaceId);
+      const validation = SpaceBusiness.validateSpaceId(spaceId);
+      if(validation.length) return new ValidationResponse(validation);
+    
+      const space = await SpaceRepository.getSpace(spaceId);
       if(!space) {
         return new SpaceNotFoundResponse(spaceId);
       }
-      console.log(`####### space: ${JSON.stringify(space)}`)
       return new SuccessResponse(space);
     }
     catch(err){
@@ -41,12 +44,14 @@ class SpaceBusiness {
   static validateSpaceId(spaceId){
     let errors = [];
     
-    if(!spaceId || !isNaN(spaceId) || !Number.isInteger(Number(spaceId))){
+    if(!spaceId || isNaN(spaceId) || !Number.isInteger(Number(spaceId))){
       errors.push({ 
         code: "INVALID_SPACE_ID_VALUE", 
         message: "Invalid spaceId value. Value must be a Integer" 
       })    
     }
+    
+    return errors;
   }  
 }
 

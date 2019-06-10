@@ -18,7 +18,7 @@ class ElementBusiness {
     if(validation.length) return new ValidationResponse(validation);
 
     const {row, column} = element;
-    const positionFilled = await hasElementInPosition({row, column})
+    const positionFilled = await hasElementInPosition({row, column}, spaceId)
 
     if(positionFilled) {
       return new AlreadyFilledPositionResponse({row, column});
@@ -61,7 +61,7 @@ class ElementBusiness {
     const moveFunc = MoveFuncMap[direction][element.face];
     const position = moveFunc(element.row, element.column);
 
-    const positionFilled = await hasElementInPosition(position)
+    const positionFilled = await hasElementInPosition(position, spaceId)
     if(positionFilled) {
       return new AlreadyFilledPositionResponse(position);
     }
@@ -86,7 +86,7 @@ class ElementBusiness {
     const element = await ElementRepository.getElementById(robotId);
     if(!element) return new RobotNotFoundResponse(robotId);    
     
-    return deleteDinosaurs(element);
+    return deleteDinosaurs(element, spaceId);
   } 
 
   static async createNewDinosaur(spaceId, element){
@@ -94,7 +94,7 @@ class ElementBusiness {
     if(validation.length) return new ValidationResponse(validation);
 
     const {row, column} = element;
-    const positionFilled = await hasElementInPosition({row, column})
+    const positionFilled = await hasElementInPosition({row, column}, spaceId)
     if(positionFilled) {
       return new AlreadyFilledPositionResponse({row, column});
     }
@@ -139,14 +139,15 @@ async function updateElement(element){
   }
 }
 
-async function deleteDinosaurs(element){
+async function deleteDinosaurs(element, spaceId){
   try{
     const rows = [ element.row -1, element.row, element.row + 1 ];
     const columns = [ element.column -1, element.column, element.column + 1 ];
     const result = await ElementRepository.deleteElementsByRowsAndColumns(
       rows,
       columns,
-      Element.Types.DINOSAUR
+      Element.Types.DINOSAUR,
+      spaceId
     );
     return new SuccessResponse({ success: result });
   }
@@ -158,8 +159,8 @@ async function deleteDinosaurs(element){
   }
 }
 
-async function hasElementInPosition(position){
-  const element = await ElementRepository.getElementByPosition(position);
+async function hasElementInPosition(position, spaceId){
+  const element = await ElementRepository.getElementByPosition(position, spaceId);
   return element != null;
 }
 

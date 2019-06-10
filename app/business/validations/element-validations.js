@@ -19,22 +19,12 @@ function validateElement(spaceId, element){
       code: "INVALID_ROW_VALUE", 
       message: "Invalid row value. Value must be a Integer" 
     })    
-  } else if(parseInt(element.row) < 1 || parseInt(element.row) > 50) {
-    errors.push({ 
-      code: "INVALID_ROW_RANGE", 
-      message: "Invalid row range. Value must be between 1 and 50" 
-    })    
-  }  
+  } 
   
   if(!element.column || isNaN(element.column) || !Number.isInteger(Number(element.column))){
     errors.push({ 
       code: "INVALID_COLUMN_VALUE", 
       message: "Invalid column value. Value must be a Integer"  
-    })    
-  } else if(parseInt(element.column) < 1 || parseInt(element.column) > 50){
-    errors.push({ 
-      code: "INVALID_COLUMN_RANGE", 
-      message: "Invalid column range. Value must be between 1 and 50" 
     })    
   }  
 
