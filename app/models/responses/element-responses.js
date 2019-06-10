@@ -8,6 +8,28 @@ class RobotNotFoundResponse {
   }
 }
 
+class AlreadyFilledPositionResponse {
+  constructor(position){
+    this.status = 409;
+    this.content = {
+      code: "ALREADY_FILLED_POSITION",
+      message: `Already fillled position (${position}).`
+    }
+  }
+}
+
+class OutOfSpaceRangeResponse {
+  constructor(position){
+    this.status = 400;
+    this.content = {
+      code: "OUT_OF_SPACE_RANGE",
+      message: `Row (${position.row}) or Column (${position.row}) out of space range [1-50].`
+    }
+  }
+}
+
 module.exports = {
-  RobotNotFoundResponse
+  RobotNotFoundResponse,
+  AlreadyFilledPositionResponse,
+  OutOfSpaceRangeResponse
 }

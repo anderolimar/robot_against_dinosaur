@@ -45,10 +45,12 @@ describe("ElementRepository", function()
 
   });
   
-  describe('.getElement', function() {
+  describe('.getElementById', function() {
 
     it('should return element by id success.', async function() {
-      let expectedElement = new Element({
+      const elementId = 2121
+      const expectedElement = new Element({
+        _id: elementId,
         row: 2,
         column: 3,
         face: Element.Faces.LEFT,
@@ -58,15 +60,17 @@ describe("ElementRepository", function()
       const ElementRepository = proxyquire("../../../../app/data/element-repository", {
         "../../libs/in-memory-db": {
           db: {
-            first: ()  => {  
-              expectedElement._id = 123;
-              return expectedElement.toObject();
+            first: (_col, query)  => {  
+              if(query._id.$eq == elementId) {
+                return expectedElement.toObject();
+              }
+              return null;
             }
           }
         }
       });
       
-      let element = await ElementRepository.getElement(expectedElement);
+      const element = await ElementRepository.getElementById(elementId);
       
       should(element).have.property('_id');
       should(element).have.property('row');
@@ -85,6 +89,53 @@ describe("ElementRepository", function()
 
   });
   
+  describe('.getElementByPosition', function() {
+
+    it('should return element by position success.', async function() {
+      const position = {
+        row: 2,
+        column: 3
+      }
+      const expectedElement = new Element({
+        _id: 2121,
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT,
+        type: Element.Types.ROBOT
+      });
+      
+      const ElementRepository = proxyquire("../../../../app/data/element-repository", {
+        "../../libs/in-memory-db": {
+          db: {
+            first: (_col, query)  => {  
+              if(query.row.$eq == 2 && query.column.$eq == 3){
+                return expectedElement.toObject();
+              }
+              return null
+            }
+          }
+        }
+      });
+      
+      let element = await ElementRepository.getElementByPosition(position);
+      
+      should(element).have.property('_id');
+      should(element).have.property('row');
+      should(element).have.property('column');
+      should(element).have.property('face');
+      should(element).have.property('type');
+      should(element).have.property('spaceId');
+      
+      should(element._id).be.equal(expectedElement._id);
+
+      should(element.row).be.equal(expectedElement.row);
+      should(element.column).be.equal(expectedElement.column);
+      should(element.face).be.equal(expectedElement.face);
+      should(element.type).be.equal(expectedElement.type);
+    });
+
+  });
+
   describe('.updateElement', function() {
 
     it('should update element by id success.', async function() {
@@ -99,7 +150,7 @@ describe("ElementRepository", function()
         "../../libs/in-memory-db": {
           db: {
             update: (col, elem, query)  => {  
-              return col == "elements"
+              return col == "elements" &&
                      elem.row == updateElement.row &&
                      elem.column == updateElement.column &&
                      elem.face == updateElement.face &&

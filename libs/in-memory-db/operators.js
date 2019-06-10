@@ -16,7 +16,10 @@ const Operators = {
     },
     "$ne" : (ref, value) => {
         return ref != value;
-    }    
+    },
+    "$in" : (ref, value) => {
+      return value.includes(ref);
+    }        
 }
 
 module.exports = Operators;

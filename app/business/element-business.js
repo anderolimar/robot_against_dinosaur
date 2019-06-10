@@ -8,12 +8,26 @@ const BadGatewayResponse = models.responses.commons.BadGatewayResponse;
 const ValidationResponse = models.responses.commons.ValidationResponse;
 const SpaceNotFoundResponse = models.responses.space.SpaceNotFoundResponse;
 const RobotNotFoundResponse = models.responses.element.RobotNotFoundResponse;
+const AlreadyFilledPositionResponse = models.responses.element.AlreadyFilledPositionResponse;
+const OutOfSpaceRangeResponse = models.responses.element.OutOfSpaceRangeResponse; 
 const DatabaseError = models.errors.database.DatabaseError;
 
 class ElementBusiness {
   static async createNewRobot(spaceId, element){
     const validation = validations.validateRobotElement(spaceId, element);
     if(validation.length) return new ValidationResponse(validation);
+
+    const {row, column} = element;
+    const positionFilled = await hasElementInPosition({row, column})
+
+    if(positionFilled) {
+      return new AlreadyFilledPositionResponse({row, column});
+    }
+
+    const validPosition = await hasValidPosition({row, column})
+    if(!validPosition) {
+      return new OutOfSpaceRangeResponse({row, column});
+    }       
     
     return createNewElement(spaceId, element, Element.Types.ROBOT);
   }
@@ -25,13 +39,13 @@ class ElementBusiness {
     const space = await SpaceRepository.getSpace(spaceId);
     if(!space) return new SpaceNotFoundResponse(spaceId);
     
-    const element = await ElementRepository.getElement(robotId);
+    const element = await ElementRepository.getElementById(robotId);
     if(!element) return new RobotNotFoundResponse(robotId);  
     
     const newFace = FaceMap[direction][element.face];
     const elementUpdate = { _id: robotId, face: newFace };    
-    
-    return updateElement(spaceId, elementUpdate);
+
+    return updateElement(elementUpdate);
   }  
   
   static async moveRobot(spaceId, robotId, direction){
@@ -41,23 +55,55 @@ class ElementBusiness {
     const space = await SpaceRepository.getSpace(spaceId);
     if(!space) return new SpaceNotFoundResponse(spaceId);
     
-    const element = await ElementRepository.getElement(robotId);
+    const element = await ElementRepository.getElementById(robotId);
     if(!element) return new RobotNotFoundResponse(robotId);    
     
     const moveFunc = MoveFuncMap[direction][element.face];
     const position = moveFunc(element.row, element.column);
-    
-    const moveValidation = validations.validateRobotMovement(position.row, position.column, direction);
-    if(moveValidation.length) return new ValidationResponse(moveValidation);    
+
+    const positionFilled = await hasElementInPosition(position)
+    if(positionFilled) {
+      return new AlreadyFilledPositionResponse(position);
+    }
+
+    const validPosition = await hasValidPosition(position)
+    if(!validPosition) {
+      return new OutOfSpaceRangeResponse(position);
+    }      
     
     const elementUpdate = Object.assign({ _id: robotId }, position);    
     
-    return updateElement(spaceId, elementUpdate);
+    return updateElement(elementUpdate);
   }  
   
+  static async robotAttack(spaceId, robotId){
+    const validation = validations.validateRobotId(spaceId, robotId);
+    if(validation.length) return new ValidationResponse(validation);
+    
+    const space = await SpaceRepository.getSpace(spaceId);
+    if(!space) return new SpaceNotFoundResponse(spaceId);
+    
+    const element = await ElementRepository.getElementById(robotId);
+    if(!element) return new RobotNotFoundResponse(robotId);    
+    
+    return deleteDinosaurs(element);
+  } 
+
   static async createNewDinosaur(spaceId, element){
     const validation = validations.validateElement(spaceId, element);
     if(validation.length) return new ValidationResponse(validation);
+
+    const {row, column} = element;
+    const positionFilled = await hasElementInPosition({row, column})
+    if(positionFilled) {
+      return new AlreadyFilledPositionResponse({row, column});
+    }
+
+    const validPosition = await hasValidPosition({row, column})
+    if(!validPosition) {
+      return new OutOfSpaceRangeResponse({row, column});
+    }    
+
     return createNewElement(spaceId, element, Element.Types.DINOSAUR);
   }  
 }
@@ -80,9 +126,9 @@ async function createNewElement(spaceId, element, type){
   }
 }  
 
-async function updateElement(spaceId, element){
+async function updateElement(element){
   try{
-    let result = await ElementRepository.updateElement(element._id, element);
+    const result = await ElementRepository.updateElement(element._id, element);
     return new SuccessResponse({ success: result });
   }
   catch(err){
@@ -91,6 +137,40 @@ async function updateElement(spaceId, element){
     }
     throw err;
   }
+}
+
+async function deleteDinosaurs(element){
+  try{
+    const rows = [ element.row -1, element.row, element.row + 1 ];
+    const columns = [ element.column -1, element.column, element.column + 1 ];
+    const result = await ElementRepository.deleteElementsByRowsAndColumns(
+      rows,
+      columns,
+      Element.Types.DINOSAUR
+    );
+    return new SuccessResponse({ success: result });
+  }
+  catch(err){
+    if(err instanceof DatabaseError){
+      return new BadGatewayResponse();
+    }
+    throw err;
+  }
+}
+
+async function hasElementInPosition(position){
+  const element = await ElementRepository.getElementByPosition(position);
+  return element != null;
+}
+
+async function hasValidPosition(position){
+  const validPosition = (
+                          parseInt(position.row) >= 1 && 
+                          parseInt(position.row) <= 50 &&
+                          parseInt(position.column) >= 1 &&
+                          parseInt(position.column) <= 50 
+                        );
+  return validPosition;
 }
 
 const FaceMap = {

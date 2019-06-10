@@ -30,6 +30,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => { 
               expectedElement._id = 456
               return expectedElement
@@ -72,6 +73,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -104,6 +106,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -136,6 +139,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -169,6 +173,7 @@ describe("ElementBusiness", function()
             getSpace: async () => null
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -184,6 +189,36 @@ describe("ElementBusiness", function()
       should(newRobot.content).have.property('message');
       should(newRobot.content.code).be.equals("SPACE_NOT_FOUND");
     });    
+
+    it('should return a error for invalid position.', async function() {
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementByPosition: async () => new Element(),
+            createNewElement: async () => null
+          }
+        }
+      });
+      
+      let newRobot = await ElementBusiness.createNewRobot(spaceId, elementParam);
+      
+      should(newRobot).have.property('status');
+      should(newRobot.status).be.equal(409);
+
+      should(newRobot).have.property('content');
+      should(newRobot.content).have.property('code');
+      should(newRobot.content).have.property('message');
+      should(newRobot.content.code).be.equals("ALREADY_FILLED_POSITION");
+    });  
 
   });
 
@@ -208,6 +243,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => { 
               expectedElement._id = 456
               return expectedElement
@@ -247,6 +283,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -278,6 +315,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -311,6 +349,7 @@ describe("ElementBusiness", function()
             getSpace: async () => null
           },
           element: {
+            getElementByPosition: async () => null,
             createNewElement: async () => null
           }
         }
@@ -350,7 +389,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('bottom');
@@ -384,7 +423,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('top');
@@ -418,7 +457,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('left');
@@ -452,7 +491,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('right');
@@ -486,7 +525,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('top');
@@ -520,7 +559,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('bottom');
@@ -554,7 +593,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('right');
@@ -588,7 +627,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () =>  elementResult,
+            getElementById: async () =>  elementResult,
             updateElement: async (elemId, elem) => {
               should(elem).have.property('face');
               should(elem.face).be.equal('left');
@@ -620,7 +659,7 @@ describe("ElementBusiness", function()
             getSpace: async () => null
           },
           element: {
-            getElement: async () => null
+            getElementById: async () => null
           }
         }
       });
@@ -650,7 +689,7 @@ describe("ElementBusiness", function()
             getSpace: async () => expectedSpace
           },
           element: {
-            getElement: async () => null
+            getElementById: async () => null
           }
         }
       });
@@ -667,4 +706,407 @@ describe("ElementBusiness", function()
     });  
 
   });    
+
+  describe('.moveRobot', function() {
+    const spaceId = 123
+    const robotId = 555
+    const expectedSpace = new Space({_id: spaceId});
+  
+    it('should move forward and update row and column with face left.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'left',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(2);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(2);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'forward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });
+    
+    it('should move forward and update row and column with face right.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'right',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(2);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(4);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'forward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });    
+    
+    it('should move forward and update row and column with face top.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'top',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(1);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(3);
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'forward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });  
+    
+    it('should move forward and update row and column with face bottom.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'bottom',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(3);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(3);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'forward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });      
+
+    it('should move backward and update row and column with face left.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'left',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(2);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(4);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });
+    
+    it('should move backward and update row and column with face right.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'right',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(2);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(2);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });    
+    
+    it('should move backward and update row and column with face top.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'top',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(3);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(3);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });  
+    
+    it('should move backward and update row and column with face bottom.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'bottom',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  null,
+            updateElement: async (_elemId, elem) => {
+              should(elem).have.property('row');
+              should(elem.row).be.equal(1);
+              should(elem).have.property('column');
+              should(elem.column).be.equal(3);
+
+            }
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(200);
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('success');
+      should(moveRobotResult.content.success).be.true;
+    });      
+
+    it('should return a error for invalid space.', async function() {
+      let invalidSpaceId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => null
+          },
+          element: {
+            getElementById: async () => null
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(404);
+
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('code');
+      should(moveRobotResult.content).have.property('message');
+      should(moveRobotResult.content.code).be.equals("SPACE_NOT_FOUND");
+    });    
+
+    it('should return a error for invalid robot.', async function() {
+      let invalidRobotId = 1111111
+      let elementParam = {
+        row: 2,
+        column: 3,
+        face: Element.Faces.LEFT
+      }
+    
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () => null
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(404);
+
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('code');
+      should(moveRobotResult.content).have.property('message');
+      should(moveRobotResult.content.code).be.equals("ROBOT_NOT_FOUND");      
+    });  
+
+    it('should return a error for invalid position.', async function() {
+      let elementResult = new Element({
+        _id: robotId,
+        row: 2,
+        column: 3,
+        face: 'bottom',
+        type: Element.Types.ROBOT,
+        spaceId: spaceId
+      });      
+
+      const ElementBusiness = proxyquire("../../../../app/business/element-business", {
+        "../data": {
+          space: {
+            getSpace: async () => expectedSpace
+          },
+          element: {
+            getElementById: async () =>  elementResult,
+            getElementByPosition: async () =>  elementResult
+          }
+        }
+      });
+      
+      const moveRobotResult = await ElementBusiness.moveRobot(spaceId, robotId, 'backward');
+      
+      should(moveRobotResult).have.property('status');
+      should(moveRobotResult.status).be.equal(409);
+
+      should(moveRobotResult).have.property('content');
+      should(moveRobotResult.content).have.property('code');
+      should(moveRobotResult.content).have.property('message');
+      should(moveRobotResult.content.code).be.equals("ALREADY_FILLED_POSITION");
+    });       
+
+  }); 
 });

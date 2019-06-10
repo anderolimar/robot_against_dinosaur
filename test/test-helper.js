@@ -13,6 +13,12 @@ class TestsHelper
         return request;
     }    
     
+    static sleep(ms){
+      return new Promise(resolve=>{
+          setTimeout(resolve,ms)
+      })
+    }
+
     static server(){
         server.init(app);
         return server;        

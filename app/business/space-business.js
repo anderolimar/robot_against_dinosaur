@@ -27,6 +27,7 @@ class SpaceBusiness {
       if(!space) {
         return new SpaceNotFoundResponse(spaceId);
       }
+      console.log(`####### space: ${JSON.stringify(space)}`)
       return new SuccessResponse(space);
     }
     catch(err){

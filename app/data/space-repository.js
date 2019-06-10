@@ -26,6 +26,7 @@ class SpaceRepository {
           let queryElements = { spaceId: { $eq: spaceId } };
           let resultSpace = db.first(spacesCollectionName, querySpace);
           let elements = db.select(elementsCollectionName, queryElements);
+          console.log(`########## getSpace elements : ${JSON.stringify(elements)}`)
           if(!resultSpace) resolve(null);
           let fromObjSpace = Space.fromObject(resultSpace); 
           fromObjSpace.filled = elements;

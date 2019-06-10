@@ -18,7 +18,7 @@ class ElementsRepository {
     });
   }
 
-  static getElement(elementId){
+  static getElementById(elementId){
     return new Promise((resolve, reject) => {
       try {
         let query = { _id: { $eq: elementId } };
@@ -33,11 +33,39 @@ class ElementsRepository {
     });
   }   
   
+  static getElementByPosition(position){
+    return new Promise((resolve, reject) => {
+      try {
+        let query = { row: { $eq: position.row }, column: { $eq: position.column } };
+        let resultElement = db.first(elementCollectionName, query);
+        if(!resultElement) resolve(null);
+        let fromObjElement = Element.fromObject(resultElement) 
+        resolve(fromObjElement);
+      }
+      catch(err){
+        reject(new DatabaseError());
+      }
+    });
+  } 
+
   static updateElement(elementId, updateProperties){
     return new Promise((resolve, reject) => {
       try {
         let query = { _id: { $eq: elementId } };
         let resultUpdate = db.update(elementCollectionName, updateProperties, query);
+        resolve(resultUpdate);
+      }
+      catch(err){
+        reject(new DatabaseError());
+      }
+    });
+  }   
+
+  static deleteElementsByRowsAndColumns(rows, columns, type){
+    return new Promise((resolve, reject) => {
+      try {
+        let query = { row: { $in: rows }, column: { $in: columns }, type: { $eq: type } };
+        let resultUpdate = db.delete(elementCollectionName, query);
         resolve(resultUpdate);
       }
       catch(err){
