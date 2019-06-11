@@ -1,0 +1,723 @@
+<html>
+<head>
+  <title>DOCUMENTATION | Robots against Dinosaurs</title>
+  <style>
+    body {
+		font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    }
+    h1 {
+		font-size: 2em;
+    }
+    h2 {
+		font-size: 1.5em;
+    }
+    h1, h2 {
+		border-bottom: 1px solid #eaecef;
+		padding-bottom: .3em;
+		font-weight: 600;
+		line-height: 1.25;
+		margin-bottom: 16px;
+		margin-top: 24px;
+    }
+    pre {
+		background-color: #f6f8fa;
+		border-radius: 3px;
+		font-size: 85%;
+		line-height: 1.45;
+		overflow: auto;
+		padding: 25px 25px 10px;
+    }
+
+    pre code {
+		background-color: transparent;
+		border: 0;
+		display: inline;
+		line-height: inherit;
+		margin: 0;
+		overflow: visible;
+		padding: 0;
+		word-wrap: normal;
+		font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    }
+    .center {
+		margin: auto;
+		width: 70%;
+		padding: 10px;
+		border: 1px solid #cdcdcd;
+		padding: 30px;	
+    }
+
+    blockquote {
+		border-left: .25em solid #dfe2e5;
+		color: #6a737d;
+		padding: 0 1em;
+    }
+	table {
+		display: block;
+		overflow: auto;
+		width: 100%;
+		margin-bottom: 16px;
+		margin-top: 0;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}	
+	table tr {
+		background-color: #fff;
+		border-top: 1px solid #c6cbd1;
+	}
+    table td, table th {
+		border: 1px solid #dfe2e5;
+		padding: 6px 13px;
+	}	
+	hr {
+		background-color: #e1e4e8;
+		border: 0;
+		height: .25em;
+		margin: 24px 0;
+		padding: 0;
+		overflow: hidden;
+	}	
+  </style>
+
+</head>
+  <body>
+    <div id=container class="center">
+
+		<h1 id="documentation">Documentation</h1>
+		<p>This is a API to support a simulations of &quot;Robot against Dinosaur&quot; in spaces with 250 position along 50 lines and 50 columns.</p>
+		<p>You can create Spaces, Robots e Dinosaurs. Only Robots can move forward or backward and turn left or right. Robots can too, attack Dinosaurs arround.</p>
+		<h2 id="routes">Routes</h2>
+		<table>
+		<thead>
+		<tr>
+		<th>ACTION</th>
+		<th>METHOD</th>
+		<th>URL</th>
+		<th>Details</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Create New Space</td>
+		<td>GET</td>
+		<td>{host}/spaces/new</td>
+		<td><a href="#spacesnew">Space New Details</a> </td>
+		</tr>
+		<tr>
+		<td>Get Space</td>
+		<td>GET</td>
+		<td>{host}/spaces/{spaceid}</td>
+		<td><a href="#spacesspaceid">Space Details</a> </td>
+		</tr>
+		<tr>
+		<td>Create New Robot</td>
+		<td>POST</td>
+		<td>{host}/spaces/{spaceid}/robots</td>
+		<td><a href="#spacesspaceidrobots">Robot New Details</a> </td>
+		</tr>
+		<tr>
+		<td>Turn Robot Left</td>
+		<td>PUT</td>
+		<td>{host}/spaces/{spaceid}/robots/{robotid}/turnleft</td>
+		<td><a href="#spacesspaceidrobotsrobotidturnleft">Robot Turn Left Details</a></td>
+		</tr>
+		<tr>
+		<td>Turn Robot Right</td>
+		<td>PUT</td>
+		<td>{host}/spaces/{spaceid}/robots/{robotid}/turnright</td>
+		<td><a href="#spacesspaceidrobotsrobotidturnright">Robot Turn Right Details</a> </td>
+		</tr>
+		<tr>
+		<td>Move Robot Forward</td>
+		<td>PUT</td>
+		<td>{host}/spaces/{spaceid}/robots/{robotid}/moveforward</td>
+		<td><a href="#spacesspaceidrobotsrobotidmoveforward">Robot Move Forward Details</a></td>
+		</tr>
+		<tr>
+		<td>Move Robot Backward</td>
+		<td>PUT</td>
+		<td>{host}/spaces/{spaceid}/robots/{robotid}/movebackward</td>
+		<td><a href="#spacesspaceidrobotsrobotidmovebackward">Robot Move Forward Details</a> </td>
+		</tr>
+		<tr>
+		<td>Create New Dinosaur</td>
+		<td>POST</td>
+		<td>{host}/spaces/{spaceid}/dinosaurs</td>
+		<td><a href="#spacesspaceiddinosaurs">Dinosaur New Details</a> </td>
+		</tr>
+		</tbody>
+		</table>
+		<hr>
+		<h2 id="routes-details">Routes details</h2>
+		<h3 id="spacesnew">/spaces/new</h3>
+		<blockquote>
+		<p>Create new space</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>GET</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#spaceresponsesuccess">SpaceResponseSuccess</a> </td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceid">/spaces/{spaceid}</h3>
+		<blockquote>
+		<p>Create space by id</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>GET</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#spaceresponsesuccess">SpaceResponseSuccess</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobots">/spaces/{spaceid}/robots</h3>
+		<blockquote>
+		<p>Create new robot</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>POST</td>
+		<td><a href="#robotrequest">RobotRequest</a> </td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#robotresponsesuccess">RobotResponseSuccess</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidiowiesponse">InvalidRowResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidiolumnresponse">InvalidColumnResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidiolumnresponse">InvalidFaceResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#outofspacerangeresponse">OutOfSpaceRangeResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>409</td>
+		<td><a href="#alreadyfilledpositionresponse">AlreadyFilledPositionResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobotsrobotidturnleft">/spaces/{spaceid}/robots/{robotid}/turnleft</h3>
+		<blockquote>
+		<p>Turn robot face to left</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>PUT</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#successresponse">SuccessResponse</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidrobotidresponse">InvalidRobotIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#robotnotfoundresponse">RobotNotFoundResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobotsrobotidturnright">/spaces/{spaceid}/robots/{robotid}/turnright</h3>
+		<blockquote>
+		<p>Turn robot face to right</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>PUT</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#successresponse">SuccessResponse</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidrobotidresponse">InvalidRobotIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#robotnotfoundresponse">RobotNotFoundResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobotsrobotidmoveforward">/spaces/{spaceid}/robots/{robotid}/moveforward</h3>
+		<blockquote>
+		<p>Move robot forward</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>PUT</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#successresponse">SuccessResponse</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidrobotidresponse">InvalidRobotIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#outofspacerangeresponse">OutOfSpaceRangeResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#robotnotfoundresponse">RobotNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>409</td>
+		<td><a href="#alreadyfilledpositionresponse">AlreadyFilledPositionResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobotsrobotidmovebackward">/spaces/{spaceid}/robots/{robotid}/movebackward</h3>
+		<blockquote>
+		<p>Move robot backward</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>PUT</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#successresponse">SuccessResponse</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidrobotidresponse">InvalidRobotIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#outofspacerangeresponse">OutOfSpaceRangeResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#robotnotfoundresponse">RobotNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>409</td>
+		<td><a href="#alreadyfilledpositionresponse">AlreadyFilledPositionResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="spacesspaceidrobotsrobotidattack">/spaces/{spaceid}/robots/{robotid}/attack</h3>
+		<blockquote>
+		<p>Robot executes attack</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>PUT</td>
+		<td>-</td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#successresponse">SuccessResponse</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidrobotidresponse">InvalidRobotIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#robotnotfoundresponse">RobotNotFoundResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 id="-spaces-spaceid-dinosaurs">/spaces/{spaceid}/dinosaurs</h3>
+		<blockquote>
+		<p>Create new dinosaur</p>
+		</blockquote>
+		<h4 id="request">Request</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Method</th>
+		<th>Body </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>POST</td>
+		<td><a href="#dinosaurrequest">DinosaurRequest</a> </td>
+		</tr>
+		</tbody>
+		</table>
+		<h4 id="responses">Responses</h4>
+		<table>
+		<thead>
+		<tr>
+		<th>Http Code</th>
+		<th>Result </th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>200</td>
+		<td><a href="#dinosaurresponsesuccess">DinosaurResponseSuccess</a> </td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidspaceidresponse">InvalidSpaceIdResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidiowiesponse">InvalidRowResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#invalidiolumnresponse">InvalidColumnResponse</a></td>
+		</tr>
+		<tr>
+		<td>400</td>
+		<td><a href="#outofspacerangeresponse">OutOfSpaceRangeResponse</a></td>
+		</tr>
+		<tr>
+		<td>404</td>
+		<td><a href="#spacenotfoundresponse">SpaceNotFoundResponse</a></td>
+		</tr>
+		<tr>
+		<td>409</td>
+		<td><a href="#alreadyfilledpositionresponse">AlreadyFilledPositionResponse</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<hr>
+		<h2 id="models">Models</h2>
+		<h3 id="requests">Requests</h3>
+		<h4 id="robotrequest">RobotRequest</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">row</span>: integer,
+		  column: integer,
+		  face: <span class="hljs-string">"right|left|top|bottom"</span>
+		}
+		</code></pre>
+		<h4 id="dinosaurrequest">DinosaurRequest</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">row</span>: integer,
+		  column: integer
+		}
+		</code></pre>
+		<h3 id="success-responses">Success Responses</h3>
+		<h4 id="spaceresponsesuccess">SpaceResponseSuccess</h4>
+		<pre><code class="lang-javascript">{
+		  _id: integer
+		  rows: { start: integer, end: integer },
+		  columns:  { start: integer, end: integer },
+		  filled:<span class="hljs-built_in"> array </span>(Robot|Dinosaur)
+		}
+		</code></pre>
+		<h4 id="robotresponsesuccess">RobotResponseSuccess</h4>
+		<pre><code class="lang-javascript">{
+		<span class="hljs-symbol">  _id:</span> integer
+		<span class="hljs-symbol">  row:</span> integer,
+		<span class="hljs-symbol">  column:</span>  integer,
+		<span class="hljs-symbol">  face:</span> <span class="hljs-string">"right|left|top|bottom"</span>,
+		<span class="hljs-symbol">  type:</span> <span class="hljs-string">"robot"</span>,
+		<span class="hljs-symbol">  spaceId:</span> integer
+		}
+		</code></pre>
+		<h4 id="dinosaurresponsesuccess">DinosaurResponseSuccess</h4>
+		<pre><code class="lang-javascript">{
+		  _id: <span class="hljs-built_in">integer</span>
+		  row: <span class="hljs-built_in">integer</span>,
+		  column:  <span class="hljs-built_in">integer</span>,
+		  <span class="hljs-built_in">type</span>: <span class="hljs-string">"dinosaur"</span>,
+		  spaceId: <span class="hljs-built_in">integer</span>
+		}
+		</code></pre>
+		<h4 id="successresponse">SuccessResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">success</span>: true
+		}
+		</code></pre>
+		<h3 id="error-responses">Error Responses</h3>
+		<h4 id="spacenotfoundresponse">SpaceNotFoundResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"SPACE_NOT_FOUND"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="invalidspaceidresponse">InvalidSpaceIdResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"INVALID_SPACE_ID_VALUE"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="invalidrobotidresponse">InvalidRobotIdResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"ROBOT_NOT_FOUND"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="robotnotfoundresponse">RobotNotFoundResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"INVALID_ROBOT_ID_VALUE"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="invalidrowresponse">InvalidRowResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"INVALID_ROW_VALUE"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="invalidcolumnresponse">InvalidColumnResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"INVALID_COLUMN_VALUE"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="invalidfaceresponse">InvalidFaceResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"INVALID_FACE_VALUE"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="alreadyfilledpositionresponse">AlreadyFilledPositionResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"ALREADY_FILLED_POSITION"</span>
+		  message: string
+		}
+		</code></pre>
+		<h4 id="outofspacerangeresponse">OutOfSpaceRangeResponse</h4>
+		<pre><code class="lang-javascript">{
+		  <span class="hljs-attribute">code</span>: <span class="hljs-string">"OUT_OF_SPACE_RANGE"</span>
+		  message: string
+		}
+		</code></pre>
+
+	
+	  
+    </div>
+  </body>
+</html>
