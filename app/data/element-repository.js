@@ -1,5 +1,7 @@
 const db = require("../../libs/in-memory-db").db;
 const models = require("../models");
+const logger = require("../logger");
+
 const Element = models.data.element;
 const DatabaseError = models.errors.database.DatabaseError;
 const elementCollectionName = "elements";
@@ -13,6 +15,7 @@ class ElementsRepository {
         resolve(fromObjElement);
       }
       catch(err){
+        logger.error(err);
         reject(new DatabaseError());
       }
     });
@@ -28,6 +31,7 @@ class ElementsRepository {
         resolve(fromObjElement);
       }
       catch(err){
+        logger.error(err);
         reject(new DatabaseError());
       }
     });
@@ -47,6 +51,7 @@ class ElementsRepository {
         resolve(fromObjElement);
       }
       catch(err){
+        logger.error(err);
         reject(new DatabaseError());
       }
     });
@@ -60,6 +65,7 @@ class ElementsRepository {
         resolve(resultUpdate);
       }
       catch(err){
+        logger.error(err);
         reject(new DatabaseError());
       }
     });
@@ -78,6 +84,7 @@ class ElementsRepository {
         resolve(resultUpdate);
       }
       catch(err){
+        logger.error(err);
         reject(new DatabaseError());
       }
     });

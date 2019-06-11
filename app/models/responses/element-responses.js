@@ -13,7 +13,7 @@ class AlreadyFilledPositionResponse {
     this.status = 409;
     this.content = {
       code: "ALREADY_FILLED_POSITION",
-      message: `Already fillled position (${position}).`
+      message: `Already filled position (${JSON.stringify(position)}).`
     }
   }
 }

@@ -25,7 +25,7 @@ $ npm start
 ```
 
 ## Test
-To unit and integration test from this API run following command :
+For unit testing and integration of this API, run the following command :
 ```
 $ npm test
 ```

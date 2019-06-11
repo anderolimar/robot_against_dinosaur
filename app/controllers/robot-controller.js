@@ -16,7 +16,6 @@ class RobotController {
   static async turnLeftRobot(req, res, next) {
     try{
       const { spaceId, robotId } = req.params;
-      console.log(`####### turnLeftRobot: ${JSON.stringify({ spaceId, robotId })}`)
       const result = await ElementBusiness.turnRobot(spaceId, robotId, "left");
       res.status(result.status).json(result.content);
     }

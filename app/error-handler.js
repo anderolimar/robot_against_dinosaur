@@ -1,9 +1,11 @@
-function notFoundHandler(req, res, next){
+const logger = require('./logger')
+
+function notFoundHandler(_req, res, _next){
   res.status(404).json({ message: "NOT FOUND" });
 }
 
-function internalErrorHandler(err, req, res, next){
-  console.log(`internalErrorHandler : ${err}`);
+function internalErrorHandler(err, _req, res, _next){
+  logger.error(err);
   res.status(500).json({ message: "INTERNAL SERVER ERRROR" });
 }
 
