@@ -14,7 +14,7 @@ Create New Robot | POST | {host}/spaces/{spaceid}/robots | [Robot New Details](#
 Turn Robot Left | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnleft | [Robot Turn Left Details](#spacesspaceidrobotsrobotidturnleft)
 Turn Robot Right | PUT | {host}/spaces/{spaceid}/robots/{robotid}/turnright |  [Robot Turn Right Details](#spacesspaceidrobotsrobotidturnright) 
 Move Robot Forward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/moveforward | [Robot Move Forward Details](#spacesspaceidrobotsrobotidmoveforward)
-Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [Robot Move Forward Details](#spacesspaceidrobotsrobotidmovebackward) 
+Move Robot Backward | PUT | {host}/spaces/{spaceid}/robots/{robotid}/movebackward |  [Robot Move Backward Details](#spacesspaceidrobotsrobotidmovebackward) 
 Create New Dinosaur | POST | {host}/spaces/{spaceid}/dinosaurs | [Dinosaur New Details](#spacesspaceiddinosaurs) 
 
 ---

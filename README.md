@@ -31,3 +31,5 @@ $ npm test
 ```
 
 ## Documentation
+
+[Go to documentation page](docs/DOCUMENTATION.md)
